@@ -1,0 +1,32 @@
+Loaded dataset: total=30000 train=27000 val=1500 test=1500 seq_len=12 vocab=3
+Training model...
+step=    1 train_loss=1.2049 val_loss=1.1771 test_loss=1.1796
+step=  240 train_loss=0.9760 val_loss=0.9585 test_loss=0.9647
+step=  480 train_loss=0.9664 val_loss=0.9416 test_loss=0.9351
+step=  720 train_loss=0.8989 val_loss=0.9461 test_loss=0.9515
+step=  960 train_loss=0.9318 val_loss=0.9462 test_loss=0.9523
+step= 1200 train_loss=0.9424 val_loss=0.9483 test_loss=0.9396
+step= 1440 train_loss=0.8975 val_loss=0.9469 test_loss=0.9271
+step= 1680 train_loss=0.9386 val_loss=0.9427 test_loss=0.9485
+step= 1920 train_loss=0.9356 val_loss=0.9320 test_loss=0.9538
+step= 2160 train_loss=0.9201 val_loss=0.9505 test_loss=0.9586
+step= 2400 train_loss=0.9248 val_loss=0.9465 test_loss=0.9417
+Saved model checkpoint to artifacts/tiny_transformer.pt
+
+Prompt tokens: [0, 1, 2]
+Generated tokens: [0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+
+=== Residual Analysis ===
+Residual stream norms at final token:
+  embed                norm=8.4378
+  layer_0_after_attn   norm=9.1164
+  layer_0_after_mlp    norm=9.7956
+  layer_1_after_attn   norm=10.7216
+  layer_1_after_mlp    norm=11.8603
+
+Logit-lens style top tokens from each residual state:
+  embed                2:0.48, 0:0.10, 1:0.07
+  layer_0_after_attn   2:0.89, 0:-0.02, 1:-0.41
+  layer_0_after_mlp    2:0.89, 0:-0.29, 1:-0.42
+  layer_1_after_attn   2:1.24, 0:-0.43, 1:-0.64
+  layer_1_after_mlp    2:1.26, 0:-0.40, 1:-0.65

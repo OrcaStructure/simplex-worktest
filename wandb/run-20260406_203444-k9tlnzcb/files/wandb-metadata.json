@@ -1,0 +1,40 @@
+{
+  "os": "Linux-6.8.0-58-lowlatency-x86_64-with-glibc2.39",
+  "python": "CPython 3.12.13",
+  "startedAt": "2026-04-06T20:34:44.494673Z",
+  "program": "/workspace/simplex-worktest/src/simple_transformer_residual.py",
+  "codePath": "src/simple_transformer_residual.py",
+  "codePathLocal": "src/simple_transformer_residual.py",
+  "git": {
+    "remote": "https://github.com/OrcaStructure/simplex-worktest.git",
+    "commit": "9dffa516f2bf878e225e3b7bdc7e8d948bb9a7ef"
+  },
+  "email": "adenpower.work@gmail.com",
+  "root": "/workspace/simplex-worktest",
+  "host": "bd269d6d9ae2",
+  "executable": "/venv/main/bin/python",
+  "cpu_count": 96,
+  "cpu_count_logical": 192,
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "17179869184",
+      "used": "931831808"
+    }
+  },
+  "memory": {
+    "total": "1081993539584"
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA GeForce RTX 5090",
+      "memoryTotal": "34190917632",
+      "cudaCores": 21760,
+      "architecture": "Blackwell",
+      "uuid": "GPU-0b9a2df0-7477-a994-2d57-1c64f9443235"
+    }
+  ],
+  "cudaVersion": "13.1",
+  "writerId": "mufhppbyxe42715ctjc03mdmafa6c4em"
+}

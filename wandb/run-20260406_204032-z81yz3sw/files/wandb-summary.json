@@ -1,0 +1,1 @@
+{"train/loss":0.9248058199882507,"test/loss":0.9416617542505265,"inference/generated_len":13,"_timestamp":1.7755080601548212e+09,"_wandb":{"runtime":26},"_runtime":26,"val/loss":0.9464652389287949,"step":2400,"_step":11}

@@ -12,7 +12,7 @@ from __future__ import annotations
 import argparse
 import json
 import random
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Dict, List, Tuple
 
@@ -36,9 +36,9 @@ DEFAULT_DATASET_PATH = "src/hmm_process/artifacts/mess3_mixed_dataset.jsonl"
 DEFAULT_TRAIN_FRAC = 0.9
 DEFAULT_EVAL_BATCHES = 20
 
-DEFAULT_TRAIN_STEPS = 800
+DEFAULT_TRAIN_STEPS = 2400
 DEFAULT_BATCH_SIZE = 32
-DEFAULT_LR = 3e-3
+DEFAULT_LR = 3e-4
 DEFAULT_VOCAB_SIZE = 3
 DEFAULT_SEQ_LEN = 12
 DEFAULT_D_MODEL = 48
@@ -55,6 +55,7 @@ DEFAULT_WANDB_PROJECT = "mess3-transformer"
 DEFAULT_WANDB_ENTITY = None
 DEFAULT_WANDB_MODE = "online"  # online | offline | disabled
 DEFAULT_WANDB_RUN_NAME = "mess3-run"
+DEFAULT_SAVE_MODEL_PATH = "artifacts/tiny_transformer.pt"
 
 
 @dataclass
@@ -111,6 +112,18 @@ def init_wandb(args: argparse.Namespace, cfg: Config):
     except Exception as exc:
         print(f"wandb init failed ({type(exc).__name__}): {exc}. Continuing without wandb.")
         return None
+
+
+def save_model(path: Path, model: nn.Module, cfg: Config, args: argparse.Namespace) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    state_dict_cpu = {k: v.detach().cpu() for k, v in model.state_dict().items()}
+    payload = {
+        "model_state_dict": state_dict_cpu,
+        "config": asdict(cfg),
+        "seed": args.seed,
+    }
+    torch.save(payload, path)
+    print(f"Saved model checkpoint to {path}")
 
 
 class TransformerBlock(nn.Module):
@@ -244,21 +257,37 @@ def load_mess3_jsonl(path: Path, seq_len: int, vocab_size: int) -> TokenDataset:
     return TokenDataset(x=x, y=y)
 
 
-def split_dataset(dataset: TokenDataset, train_frac: float, seed: int) -> Tuple[TokenDataset, TokenDataset]:
+def split_dataset(
+    dataset: TokenDataset,
+    train_frac: float,
+    seed: int,
+) -> Tuple[TokenDataset, TokenDataset, TokenDataset]:
     if not (0.0 < train_frac < 1.0):
         raise ValueError("train_frac must be in (0,1)")
 
     n = dataset.size
-    if n < 2:
-        raise ValueError("Dataset needs at least 2 sequences for split")
+    if n < 3:
+        raise ValueError("Dataset needs at least 3 sequences for train/val/test split")
 
     g = torch.Generator().manual_seed(seed)
     perm = torch.randperm(n, generator=g)
     n_train = max(1, min(n - 1, int(n * train_frac)))
-    tr_idx = perm[:n_train]
-    va_idx = perm[n_train:]
+    n_eval = n - n_train
+    n_val = max(1, n_eval // 2)
+    n_test = n_eval - n_val
+    if n_test == 0:
+        n_test = 1
+        n_val = max(1, n_val - 1)
 
-    return TokenDataset(dataset.x[tr_idx], dataset.y[tr_idx]), TokenDataset(dataset.x[va_idx], dataset.y[va_idx])
+    tr_idx = perm[:n_train]
+    va_idx = perm[n_train : n_train + n_val]
+    te_idx = perm[n_train + n_val :]
+
+    return (
+        TokenDataset(dataset.x[tr_idx], dataset.y[tr_idx]),
+        TokenDataset(dataset.x[va_idx], dataset.y[va_idx]),
+        TokenDataset(dataset.x[te_idx], dataset.y[te_idx]),
+    )
 
 
 def sample_batch(dataset: TokenDataset, batch_size: int, device: torch.device, generator: torch.Generator) -> Tuple[torch.Tensor, torch.Tensor]:
@@ -350,6 +379,7 @@ def train(
     device: torch.device,
     train_data: TokenDataset | None,
     val_data: TokenDataset | None,
+    test_data: TokenDataset | None,
     eval_batches: int,
     seed: int,
     use_synthetic: bool,
@@ -388,6 +418,17 @@ def train(
                 )
                 msg += f" val_loss={val:.4f}"
                 log_payload["val/loss"] = float(val)
+            if (not use_synthetic) and test_data is not None:
+                test = eval_loss(
+                    model,
+                    test_data,
+                    batch_size=batch_size,
+                    eval_batches=eval_batches,
+                    device=device,
+                    seed=seed + step + 10_000,
+                )
+                msg += f" test_loss={test:.4f}"
+                log_payload["test/loss"] = float(test)
             print(msg)
             if wandb_run is not None:
                 wandb_run.log(log_payload)
@@ -429,6 +470,7 @@ def main() -> None:
     parser.add_argument("--wandb-entity", type=str, default=DEFAULT_WANDB_ENTITY)
     parser.add_argument("--wandb-mode", type=str, default=DEFAULT_WANDB_MODE, choices=["online", "offline", "disabled"])
     parser.add_argument("--wandb-run-name", type=str, default=DEFAULT_WANDB_RUN_NAME)
+    parser.add_argument("--save-model-path", type=str, default=DEFAULT_SAVE_MODEL_PATH)
     args = parser.parse_args()
 
     random.seed(args.seed)
@@ -452,14 +494,15 @@ def main() -> None:
 
     train_data: TokenDataset | None = None
     val_data: TokenDataset | None = None
+    test_data: TokenDataset | None = None
     if not args.use_synthetic:
         dataset_path = Path(args.dataset_path)
         if not dataset_path.exists():
             raise FileNotFoundError(f"Dataset not found: {dataset_path}")
         all_data = load_mess3_jsonl(dataset_path, seq_len=cfg.seq_len, vocab_size=cfg.vocab_size)
-        train_data, val_data = split_dataset(all_data, train_frac=args.train_frac, seed=args.seed)
+        train_data, val_data, test_data = split_dataset(all_data, train_frac=args.train_frac, seed=args.seed)
         print(
-            f"Loaded dataset: total={all_data.size} train={train_data.size} val={val_data.size} "
+            f"Loaded dataset: total={all_data.size} train={train_data.size} val={val_data.size} test={test_data.size} "
             f"seq_len={cfg.seq_len} vocab={cfg.vocab_size}"
         )
 
@@ -473,11 +516,14 @@ def main() -> None:
         device=device,
         train_data=train_data,
         val_data=val_data,
+        test_data=test_data,
         eval_batches=args.eval_batches,
         seed=args.seed,
         use_synthetic=args.use_synthetic,
         wandb_run=wandb_run,
     )
+
+    save_model(Path(args.save_model_path), model, cfg, args)
 
     prompt = parse_prompt(args.prompt, cfg.vocab_size)
     print(f"\nPrompt tokens: {prompt}")

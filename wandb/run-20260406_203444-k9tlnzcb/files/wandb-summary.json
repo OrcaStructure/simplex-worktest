@@ -1,0 +1,1 @@
+{"step":2400,"_wandb":{"runtime":27},"_runtime":27,"_timestamp":1.7755077126113544e+09,"inference/generated_len":13,"test/loss":0.9406857907772064,"val/loss":0.9456726431846618,"_step":11,"train/loss":0.9279494285583496}

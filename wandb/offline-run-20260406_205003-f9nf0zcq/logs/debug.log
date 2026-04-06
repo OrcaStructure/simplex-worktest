@@ -1,0 +1,9 @@
+2026-04-06 20:50:03,726 INFO    MainThread:68519 [wandb_setup.py:_flush():81] Current SDK version is 0.25.1
+2026-04-06 20:50:03,727 INFO    MainThread:68519 [wandb_setup.py:_flush():81] Configure stats pid to 68519
+2026-04-06 20:50:03,727 INFO    MainThread:68519 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2026-04-06 20:50:03,729 INFO    MainThread:68519 [wandb_init.py:setup_run_log_directory():717] Logging user logs to /Users/aden/Documents/life/applications/simplex-worktest/wandb/offline-run-20260406_205003-f9nf0zcq/logs/debug.log
+2026-04-06 20:50:03,730 INFO    MainThread:68519 [wandb_init.py:setup_run_log_directory():718] Logging internal logs to /Users/aden/Documents/life/applications/simplex-worktest/wandb/offline-run-20260406_205003-f9nf0zcq/logs/debug-internal.log
+2026-04-06 20:50:03,730 INFO    MainThread:68519 [wandb_init.py:init():844] calling init triggers
+2026-04-06 20:50:03,730 INFO    MainThread:68519 [wandb_init.py:init():849] wandb.init called with sweep_config: {}
+config: {'seed': 0, 'device': 'cpu', 'dataset_path': 'src/hmm_process/artifacts/mess3_mixed_dataset.jsonl', 'train_frac': 0.9, 'train_steps': 1, 'batch_size': 16, 'lr': 0.003, 'vocab_size': 3, 'seq_len': 63, 'd_model': 96, 'n_heads': 4, 'd_ff': 192, 'n_layers': 3, 'use_synthetic': False, '_wandb': {}}
+2026-04-06 20:50:03,731 INFO    MainThread:68519 [wandb_init.py:init():892] starting backend

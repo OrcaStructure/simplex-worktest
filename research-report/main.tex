@@ -1,0 +1,89 @@
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Encoding and typography ----------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% ---------- Page layout ----------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{setspace}
+\setstretch{1.15}
+
+% ---------- Math, figures, tables ----------
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{siunitx}
+
+% ---------- References and links ----------
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+% ---------- Header/footer ----------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{14pt}
+\lhead{Research Report}
+\rhead{\thepage}
+
+% ---------- Title metadata ----------
+\title{Research Report Title}
+\author{Your Name \\ Department or Institution}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\begin{abstract}
+Provide a concise summary of the research question, method, key results, and primary conclusion.
+\end{abstract}
+
+\section{Introduction}
+State the problem context, motivation, and objective of this research. Briefly summarize relevant background and define the main research question.
+
+\section{Method}
+Describe your approach in enough detail for reproducibility.
+
+\subsection{Design and Data}
+Explain study design, data sources, sampling, and preprocessing.
+
+\subsection{Procedure}
+Detail the steps, tools, model setup, or experimental protocol.
+
+\subsection{Evaluation}
+Describe metrics, baselines, and statistical tests if applicable.
+
+\section{Results}
+Present core findings clearly.
+
+\subsection{Primary Findings}
+Summarize the main quantitative or qualitative outcomes.
+
+\subsection{Additional Analyses}
+Include robustness checks, ablations, subgroup analysis, or error analysis.
+
+\section{Discussion}
+Interpret the results, limitations, and implications.
+
+\subsection{Interpretation}
+Explain what the findings mean in relation to the research question.
+
+\subsection{Limitations}
+Note constraints that affect validity or generalizability.
+
+\subsection{Future Work}
+List practical next steps and open research directions.
+
+\section*{Acknowledgments}
+Optional.
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+
+\end{document}

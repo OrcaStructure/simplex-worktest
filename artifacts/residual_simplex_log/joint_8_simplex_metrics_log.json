@@ -1,0 +1,20 @@
+{
+  "metrics": {
+    "num_samples": 72000,
+    "num_train": 57600,
+    "num_val": 14400,
+    "mse_train": 0.05937785655260086,
+    "mse_val": 0.06023155897855759,
+    "mae_val": 0.13815146684646606,
+    "soft_ce_val": 2.2007675170898438,
+    "process_block_acc_val": 0.4395138919353485,
+    "true_process_block_mass_mean_val": 0.4268079996109009
+  },
+  "W_shape": [
+    9,
+    48
+  ],
+  "b_shape": [
+    9
+  ]
+}

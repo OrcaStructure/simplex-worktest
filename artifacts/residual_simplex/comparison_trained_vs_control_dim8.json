@@ -1,0 +1,208 @@
+{
+  "trained": {
+    "config": {
+      "dim": 8,
+      "train_frac": 0.8,
+      "seed": 0,
+      "max_sequences": 6000,
+      "checkpoint": "artifacts/tiny_transformer.pt"
+    },
+    "standard_target": {
+      "per_process": {
+        "0": {
+          "num_samples": 24684,
+          "num_train": 19747,
+          "num_val": 4937,
+          "mse_train": 0.01621052622795105,
+          "mse_val": 0.016116982325911522,
+          "mae_val": 0.09907116740942001,
+          "soft_ce_val": 0.7190178036689758
+        },
+        "1": {
+          "num_samples": 23964,
+          "num_train": 19171,
+          "num_val": 4793,
+          "mse_train": 0.010043305344879627,
+          "mse_val": 0.010055557824671268,
+          "mae_val": 0.08165909349918365,
+          "soft_ce_val": 0.8143286108970642
+        },
+        "2": {
+          "num_samples": 23352,
+          "num_train": 18681,
+          "num_val": 4671,
+          "mse_train": 0.016420872882008553,
+          "mse_val": 0.016778558492660522,
+          "mae_val": 0.0892486497759819,
+          "soft_ce_val": 0.499112069606781
+        }
+      },
+      "per_process_weighted": {
+        "mse_val": 0.014314177981799311,
+        "mae_val": 0.0900900515065277,
+        "soft_ce_val": 0.6794125689796984
+      },
+      "joint_8_simplex": {
+        "num_samples": 72000,
+        "num_train": 57600,
+        "num_val": 14400,
+        "mse_train": 0.054492030292749405,
+        "mse_val": 0.05440200865268707,
+        "mae_val": 0.15005935728549957,
+        "soft_ce_val": 1.7783102989196777,
+        "process_block_acc_val": 0.35527777671813965,
+        "true_process_block_mass_mean_val": 0.33440321683883667
+      }
+    },
+    "log_target": {
+      "per_process": {
+        "0": {
+          "num_samples": 24684,
+          "num_train": 19747,
+          "num_val": 4937,
+          "mse_train": 0.01711779087781906,
+          "mse_val": 0.016906138509511948,
+          "mae_val": 0.08422396332025528,
+          "soft_ce_val": 0.6255868673324585
+        },
+        "1": {
+          "num_samples": 23964,
+          "num_train": 19171,
+          "num_val": 4793,
+          "mse_train": 0.009753435850143433,
+          "mse_val": 0.009779118001461029,
+          "mae_val": 0.07681944221258163,
+          "soft_ce_val": 0.8079172968864441
+        },
+        "2": {
+          "num_samples": 23352,
+          "num_train": 18681,
+          "num_val": 4671,
+          "mse_train": 0.01796897128224373,
+          "mse_val": 0.01888635754585266,
+          "mae_val": 0.0583987683057785,
+          "soft_ce_val": 0.414133220911026
+        }
+      },
+      "per_process_weighted": {
+        "mse_val": 0.015176383202495728,
+        "mae_val": 0.07338309424298975,
+        "soft_ce_val": 0.617685316496943
+      },
+      "joint_8_simplex": {
+        "num_samples": 72000,
+        "num_train": 57600,
+        "num_val": 14400,
+        "mse_train": 0.058365702629089355,
+        "mse_val": 0.058372609317302704,
+        "mae_val": 0.15661466121673584,
+        "soft_ce_val": 1.8523569107055664,
+        "process_block_acc_val": 0.35055556893348694,
+        "true_process_block_mass_mean_val": 0.3374749720096588
+      }
+    }
+  },
+  "control_random_init": {
+    "config": {
+      "dim": 8,
+      "train_frac": 0.8,
+      "seed": 0,
+      "max_sequences": 6000,
+      "checkpoint": "artifacts/tiny_transformer_random_init.pt"
+    },
+    "standard_target": {
+      "per_process": {
+        "0": {
+          "num_samples": 24684,
+          "num_train": 19747,
+          "num_val": 4937,
+          "mse_train": 0.020720545202493668,
+          "mse_val": 0.02048020251095295,
+          "mae_val": 0.11387050151824951,
+          "soft_ce_val": 0.7533820271492004
+        },
+        "1": {
+          "num_samples": 23964,
+          "num_train": 19171,
+          "num_val": 4793,
+          "mse_train": 0.013033892028033733,
+          "mse_val": 0.013014043681323528,
+          "mae_val": 0.09452130645513535,
+          "soft_ce_val": 0.8312227725982666
+        },
+        "2": {
+          "num_samples": 23352,
+          "num_train": 18681,
+          "num_val": 4671,
+          "mse_train": 0.01975322514772415,
+          "mse_val": 0.020821163430809975,
+          "mae_val": 0.10173671692609787,
+          "soft_ce_val": 0.700541079044342
+        }
+      },
+      "per_process_weighted": {
+        "mse_val": 0.01810587636597957,
+        "mae_val": 0.1034949998331272,
+        "soft_ce_val": 0.7621502116044174
+      },
+      "joint_8_simplex": {
+        "num_samples": 72000,
+        "num_train": 57600,
+        "num_val": 14400,
+        "mse_train": 0.05523006245493889,
+        "mse_val": 0.05508817359805107,
+        "mae_val": 0.15101423859596252,
+        "soft_ce_val": 1.845262885093689,
+        "process_block_acc_val": 0.34319445490837097,
+        "true_process_block_mass_mean_val": 0.3335607945919037
+      }
+    },
+    "log_target": {
+      "per_process": {
+        "0": {
+          "num_samples": 24684,
+          "num_train": 19747,
+          "num_val": 4937,
+          "mse_train": 0.020340610295534134,
+          "mse_val": 0.020263224840164185,
+          "mae_val": 0.09644589573144913,
+          "soft_ce_val": 0.6541192531585693
+        },
+        "1": {
+          "num_samples": 23964,
+          "num_train": 19171,
+          "num_val": 4793,
+          "mse_train": 0.012176195159554482,
+          "mse_val": 0.01216836366802454,
+          "mae_val": 0.08906857669353485,
+          "soft_ce_val": 0.8220705986022949
+        },
+        "2": {
+          "num_samples": 23352,
+          "num_train": 18681,
+          "num_val": 4671,
+          "mse_train": 0.019438082352280617,
+          "mse_val": 0.02064034529030323,
+          "mae_val": 0.0651877373456955,
+          "soft_ce_val": 0.4578278064727783
+        }
+      },
+      "per_process_weighted": {
+        "mse_val": 0.017691379831104685,
+        "mae_val": 0.08385188503992921,
+        "soft_ce_val": 0.6463498934781615
+      },
+      "joint_8_simplex": {
+        "num_samples": 72000,
+        "num_train": 57600,
+        "num_val": 14400,
+        "mse_train": 0.059240661561489105,
+        "mse_val": 0.05913102626800537,
+        "mae_val": 0.15809087455272675,
+        "soft_ce_val": 1.873706340789795,
+        "process_block_acc_val": 0.3338194489479065,
+        "true_process_block_mass_mean_val": 0.3347540497779846
+      }
+    }
+  }
+}

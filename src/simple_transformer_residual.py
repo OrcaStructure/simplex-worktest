@@ -37,14 +37,14 @@ DEFAULT_TRAIN_FRAC = 0.9
 DEFAULT_EVAL_BATCHES = 20
 
 DEFAULT_TRAIN_STEPS = 800
-DEFAULT_BATCH_SIZE = 64
+DEFAULT_BATCH_SIZE = 32
 DEFAULT_LR = 3e-3
 DEFAULT_VOCAB_SIZE = 3
-DEFAULT_SEQ_LEN = 63
-DEFAULT_D_MODEL = 96
+DEFAULT_SEQ_LEN = 12
+DEFAULT_D_MODEL = 48
 DEFAULT_N_HEADS = 4
-DEFAULT_D_FF = 192
-DEFAULT_N_LAYERS = 3
+DEFAULT_D_FF = 96
+DEFAULT_N_LAYERS = 2
 
 DEFAULT_PROMPT = "0,1,2"
 DEFAULT_GENERATE = 10
@@ -436,7 +436,8 @@ def main() -> None:
 
     device = torch.device(args.device)
     if device.type == "cuda" and not torch.cuda.is_available():
-        raise RuntimeError("CUDA requested but not available")
+        print("CUDA requested but not available. Falling back to CPU.")
+        device = torch.device("cpu")
 
     cfg = Config(
         vocab_size=args.vocab_size,

@@ -1,0 +1,24 @@
+{
+  "trained": {
+    "dim": 24,
+    "target_space": "probability",
+    "per_process_kl_val": {
+      "0": 0.13804484903812408,
+      "1": 0.027418602257966995,
+      "2": 0.11108986288309097
+    },
+    "joint_8_simplex_kl_val": 1.2324435710906982,
+    "block_3_simplex_kl_val": 0.12413379549980164
+  },
+  "control_random_init": {
+    "dim": 24,
+    "target_space": "probability",
+    "per_process_kl_val": {
+      "0": 0.1233675554394722,
+      "1": 0.045490045100450516,
+      "2": 0.1602020412683487
+    },
+    "joint_8_simplex_kl_val": 1.232613444328308,
+    "block_3_simplex_kl_val": 0.13736575841903687
+  }
+}

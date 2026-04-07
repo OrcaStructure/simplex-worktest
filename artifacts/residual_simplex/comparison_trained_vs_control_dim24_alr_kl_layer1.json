@@ -1,0 +1,28 @@
+{
+  "trained": {
+    "dim": 24,
+    "target_coords_per_process": 2,
+    "target_coords_block": 2,
+    "target_coords_joint_8simplex": 8,
+    "per_process_kl_val": {
+      "0": 0.038886331021785736,
+      "1": 0.023324264213442802,
+      "2": 0.045534372329711914
+    },
+    "joint_8_simplex_kl_val": 1.5669955015182495,
+    "block_3_simplex_kl_val": 0.11429344862699509
+  },
+  "control_random_init": {
+    "dim": 24,
+    "target_coords_per_process": 2,
+    "target_coords_block": 2,
+    "target_coords_joint_8simplex": 8,
+    "per_process_kl_val": {
+      "0": 0.07087092846632004,
+      "1": 0.03922068327665329,
+      "2": 0.08594081550836563
+    },
+    "joint_8_simplex_kl_val": 1.3252960443496704,
+    "block_3_simplex_kl_val": 0.14764191210269928
+  }
+}

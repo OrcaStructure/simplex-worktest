@@ -1,28 +1,28 @@
 {
   "trained": {
     "dim": 24,
-    "rrr_rank_per_process": 3,
+    "rrr_rank_per_process": 2,
     "rrr_rank_joint_8": 8,
-    "rrr_rank_block": 3,
+    "rrr_rank_block": 2,
     "per_process_kl_val": {
-      "0": 0.03661738336086273,
-      "1": 0.022528529167175293,
-      "2": 0.04344569519162178
+      "0": 0.25751835107803345,
+      "1": 0.16556909680366516,
+      "2": 0.3939031660556793
     },
-    "joint_8_simplex_kl_val": 1.5707426071166992,
-    "block_3_simplex_kl_val": 0.11561527103185654
+    "joint_8_simplex_kl_val": 1.558877944946289,
+    "block_3_simplex_kl_val": 0.11562179028987885
   },
   "control_random_init": {
     "dim": 24,
-    "rrr_rank_per_process": 3,
+    "rrr_rank_per_process": 2,
     "rrr_rank_joint_8": 8,
-    "rrr_rank_block": 3,
+    "rrr_rank_block": 2,
     "per_process_kl_val": {
-      "0": 0.07020873576402664,
-      "1": 0.03878629952669144,
-      "2": 0.0857626423239708
+      "0": 0.29721641540527344,
+      "1": 0.17446938157081604,
+      "2": 0.37507182359695435
     },
-    "joint_8_simplex_kl_val": 1.341208577156067,
-    "block_3_simplex_kl_val": 0.14563432335853577
+    "joint_8_simplex_kl_val": 1.336378812789917,
+    "block_3_simplex_kl_val": 0.14416515827178955
   }
 }

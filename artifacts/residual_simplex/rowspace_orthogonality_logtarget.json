@@ -1,0 +1,661 @@
+{
+  "config": {
+    "dataset_path": "src/hmm_process/artifacts/mess3_mixed_dataset.jsonl",
+    "max_seqs": 6000,
+    "use_pca": true,
+    "pca_dim": 24,
+    "eps": 1e-08,
+    "random_control_samples": 2000,
+    "random_control_seed": 0
+  },
+  "results": {
+    "trained": {
+      "final_ln": {
+        "case": "trained",
+        "cache_key": "final_ln",
+        "input_dim": 24,
+        "ranks": {
+          "p0": 3,
+          "p1": 3,
+          "p2": 3,
+          "block": 3
+        },
+        "singular_values": {
+          "p0": [
+            1.9576475241899716,
+            1.5412859380494486,
+            1.3932933449477805
+          ],
+          "p1": [
+            1.1502613161816282,
+            0.9424287656721215,
+            0.6989850890593309
+          ],
+          "p2": [
+            3.2854917513484216,
+            2.1288240355723853,
+            1.8744889698755285
+          ],
+          "block": [
+            3.388851711982512,
+            0.3558768252547883,
+            0.08160590295870478
+          ]
+        },
+        "pairwise": {
+          "p0_vs_p1": {
+            "k": 3,
+            "principal_angles_deg": [
+              3.7363909340973063,
+              6.527844211796819,
+              13.510092371990119
+            ],
+            "mean_angle_deg": 7.924775839294749,
+            "min_angle_deg": 3.7363909340973063,
+            "max_angle_deg": 13.510092371990119,
+            "avg_cos2": 0.9760840420264646,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.46923739192012,
+              "null_mean_angle_deg_std": 4.339620993184036,
+              "null_avg_cos2_mean": 0.12499009869761346,
+              "null_avg_cos2_std": 0.051469312289487194,
+              "observed_mean_angle_percentile": 0.0,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          },
+          "p0_vs_p2": {
+            "k": 3,
+            "principal_angles_deg": [
+              9.55007352242653,
+              11.507750917586682,
+              13.807782010194313
+            ],
+            "mean_angle_deg": 11.62186881673584,
+            "min_angle_deg": 9.55007352242653,
+            "max_angle_deg": 13.807782010194313,
+            "avg_cos2": 0.9585708119845839,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.2254722862422,
+              "null_mean_angle_deg_std": 4.206131086901628,
+              "null_avg_cos2_mean": 0.12741584649238102,
+              "null_avg_cos2_std": 0.050112117446365845,
+              "observed_mean_angle_percentile": 0.0,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          },
+          "p1_vs_p2": {
+            "k": 3,
+            "principal_angles_deg": [
+              11.871863817822371,
+              16.6096350040722,
+              24.09924634373155
+            ],
+            "mean_angle_deg": 17.526915055208708,
+            "min_angle_deg": 11.871863817822371,
+            "max_angle_deg": 24.09924634373155,
+            "avg_cos2": 0.9030812920423078,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.43444978333653,
+              "null_mean_angle_deg_std": 4.218480415032495,
+              "null_avg_cos2_mean": 0.12501949762976547,
+              "null_avg_cos2_std": 0.05000926642723508,
+              "observed_mean_angle_percentile": 0.0,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          },
+          "p0_vs_block": {
+            "k": 3,
+            "principal_angles_deg": [
+              30.49834926743153,
+              69.80847376493917,
+              84.041510164528
+            ],
+            "mean_angle_deg": 61.44944439896623,
+            "min_angle_deg": 30.49834926743153,
+            "max_angle_deg": 84.041510164528,
+            "avg_cos2": 0.29078036687816294,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.28583236144244,
+              "null_mean_angle_deg_std": 4.327284851441258,
+              "null_avg_cos2_mean": 0.1264802621639869,
+              "null_avg_cos2_std": 0.051398014026247135,
+              "observed_mean_angle_percentile": 0.014,
+              "observed_avg_cos2_percentile": 0.9965
+            }
+          },
+          "p1_vs_block": {
+            "k": 3,
+            "principal_angles_deg": [
+              28.016562580272296,
+              68.71985924905327,
+              84.24618218912313
+            ],
+            "mean_angle_deg": 60.32753467281623,
+            "min_angle_deg": 28.016562580272296,
+            "max_angle_deg": 84.24618218912313,
+            "avg_cos2": 0.307041541277867,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.3740149630619,
+              "null_mean_angle_deg_std": 4.509199839433571,
+              "null_avg_cos2_mean": 0.12579394022332768,
+              "null_avg_cos2_std": 0.05342337491818438,
+              "observed_mean_angle_percentile": 0.011,
+              "observed_avg_cos2_percentile": 0.9965
+            }
+          },
+          "p2_vs_block": {
+            "k": 3,
+            "principal_angles_deg": [
+              30.04689273539734,
+              74.55338145510302,
+              82.46241303536934
+            ],
+            "mean_angle_deg": 62.3542290752899,
+            "min_angle_deg": 30.04689273539734,
+            "max_angle_deg": 82.46241303536934,
+            "avg_cos2": 0.2791451387187119,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.60307279349321,
+              "null_mean_angle_deg_std": 4.214270899162417,
+              "null_avg_cos2_mean": 0.12276721689679314,
+              "null_avg_cos2_std": 0.04954659717336106,
+              "observed_mean_angle_percentile": 0.01,
+              "observed_avg_cos2_percentile": 0.9955
+            }
+          }
+        }
+      },
+      "layer1": {
+        "case": "trained",
+        "cache_key": "layer_0_after_mlp",
+        "input_dim": 24,
+        "ranks": {
+          "p0": 3,
+          "p1": 3,
+          "p2": 3,
+          "block": 3
+        },
+        "singular_values": {
+          "p0": [
+            1.9592624084557675,
+            1.868438147448296,
+            1.4949622094362183
+          ],
+          "p1": [
+            1.1370938357628215,
+            1.0695167453452972,
+            0.6792991825758838
+          ],
+          "p2": [
+            3.476723570713555,
+            2.9900979254676434,
+            2.5375345947019707
+          ],
+          "block": [
+            2.744573770930216,
+            0.16500538624302713,
+            0.03235281564833648
+          ]
+        },
+        "pairwise": {
+          "p0_vs_p1": {
+            "k": 3,
+            "principal_angles_deg": [
+              2.5649952310374693,
+              4.649218971998471,
+              9.199948551209038
+            ],
+            "mean_angle_deg": 5.471387584748327,
+            "min_angle_deg": 2.5649952310374693,
+            "max_angle_deg": 9.199948551209038,
+            "avg_cos2": 0.9886218498639193,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.46923739192012,
+              "null_mean_angle_deg_std": 4.339620993184036,
+              "null_avg_cos2_mean": 0.12499009869761346,
+              "null_avg_cos2_std": 0.051469312289487194,
+              "observed_mean_angle_percentile": 0.0,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          },
+          "p0_vs_p2": {
+            "k": 3,
+            "principal_angles_deg": [
+              4.741754541200751,
+              5.8764838598355515,
+              6.832213400074111
+            ],
+            "mean_angle_deg": 5.816817267036805,
+            "min_angle_deg": 4.741754541200751,
+            "max_angle_deg": 6.832213400074111,
+            "avg_cos2": 0.989510661061666,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.2254722862422,
+              "null_mean_angle_deg_std": 4.206131086901628,
+              "null_avg_cos2_mean": 0.12741584649238102,
+              "null_avg_cos2_std": 0.050112117446365845,
+              "observed_mean_angle_percentile": 0.0,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          },
+          "p1_vs_p2": {
+            "k": 3,
+            "principal_angles_deg": [
+              6.041292184720042,
+              9.028986767055702,
+              13.163244211719412
+            ],
+            "mean_angle_deg": 9.41117438783172,
+            "min_angle_deg": 6.041292184720042,
+            "max_angle_deg": 13.163244211719412,
+            "avg_cos2": 0.9708119604422802,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.43444978333653,
+              "null_mean_angle_deg_std": 4.218480415032495,
+              "null_avg_cos2_mean": 0.12501949762976547,
+              "null_avg_cos2_std": 0.05000926642723508,
+              "observed_mean_angle_percentile": 0.0,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          },
+          "p0_vs_block": {
+            "k": 3,
+            "principal_angles_deg": [
+              22.030432605661186,
+              49.43052977009504,
+              86.43959933426677
+            ],
+            "mean_angle_deg": 52.63352057000767,
+            "min_angle_deg": 22.030432605661186,
+            "max_angle_deg": 86.43959933426677,
+            "avg_cos2": 0.42871259451244903,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.28583236144244,
+              "null_mean_angle_deg_std": 4.327284851441258,
+              "null_avg_cos2_mean": 0.1264802621639869,
+              "null_avg_cos2_std": 0.051398014026247135,
+              "observed_mean_angle_percentile": 0.0,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          },
+          "p1_vs_block": {
+            "k": 3,
+            "principal_angles_deg": [
+              21.060107622091635,
+              51.83484784162717,
+              85.5595260054334
+            ],
+            "mean_angle_deg": 52.8181604897174,
+            "min_angle_deg": 21.060107622091635,
+            "max_angle_deg": 85.5595260054334,
+            "avg_cos2": 0.4195672911406925,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.3740149630619,
+              "null_mean_angle_deg_std": 4.509199839433571,
+              "null_avg_cos2_mean": 0.12579394022332768,
+              "null_avg_cos2_std": 0.05342337491818438,
+              "observed_mean_angle_percentile": 0.0005,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          },
+          "p2_vs_block": {
+            "k": 3,
+            "principal_angles_deg": [
+              23.913511779455412,
+              45.33399783046913,
+              85.10809467871334
+            ],
+            "mean_angle_deg": 51.45186809621263,
+            "min_angle_deg": 23.913511779455412,
+            "max_angle_deg": 85.10809467871334,
+            "avg_cos2": 0.44570945023176406,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.60307279349321,
+              "null_mean_angle_deg_std": 4.214270899162417,
+              "null_avg_cos2_mean": 0.12276721689679314,
+              "null_avg_cos2_std": 0.04954659717336106,
+              "observed_mean_angle_percentile": 0.0,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          }
+        }
+      }
+    },
+    "control_random_init": {
+      "final_ln": {
+        "case": "control_random_init",
+        "cache_key": "final_ln",
+        "input_dim": 24,
+        "ranks": {
+          "p0": 3,
+          "p1": 3,
+          "p2": 3,
+          "block": 3
+        },
+        "singular_values": {
+          "p0": [
+            3.841540422639142,
+            3.011294234071187,
+            1.4680721943793476
+          ],
+          "p1": [
+            2.3717550073328684,
+            1.7196470838515825,
+            0.6325663266147752
+          ],
+          "p2": [
+            5.435647165055523,
+            4.541284177447116,
+            2.7604223937203716
+          ],
+          "block": [
+            2.176895478312659,
+            0.28887698559309244,
+            0.06869646966812899
+          ]
+        },
+        "pairwise": {
+          "p0_vs_p1": {
+            "k": 3,
+            "principal_angles_deg": [
+              2.954739891916066,
+              5.326690388846259,
+              8.234996005207357
+            ],
+            "mean_angle_deg": 5.505475428656561,
+            "min_angle_deg": 2.954739891916066,
+            "max_angle_deg": 8.234996005207357,
+            "avg_cos2": 0.9894029482889378,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.46923739192012,
+              "null_mean_angle_deg_std": 4.339620993184036,
+              "null_avg_cos2_mean": 0.12499009869761346,
+              "null_avg_cos2_std": 0.051469312289487194,
+              "observed_mean_angle_percentile": 0.0,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          },
+          "p0_vs_p2": {
+            "k": 3,
+            "principal_angles_deg": [
+              3.3195298663050403,
+              7.006370077925274,
+              16.695310344010007
+            ],
+            "mean_angle_deg": 9.007070096080106,
+            "min_angle_deg": 3.3195298663050403,
+            "max_angle_deg": 16.695310344010007,
+            "avg_cos2": 0.9664123424198895,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.2254722862422,
+              "null_mean_angle_deg_std": 4.206131086901628,
+              "null_avg_cos2_mean": 0.12741584649238102,
+              "null_avg_cos2_std": 0.050112117446365845,
+              "observed_mean_angle_percentile": 0.0,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          },
+          "p1_vs_p2": {
+            "k": 3,
+            "principal_angles_deg": [
+              6.397923895413508,
+              9.754913679083604,
+              18.226327565091903
+            ],
+            "mean_angle_deg": 11.45972171319634,
+            "min_angle_deg": 6.397923895413508,
+            "max_angle_deg": 18.226327565091903,
+            "avg_cos2": 0.9536829554067804,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.43444978333653,
+              "null_mean_angle_deg_std": 4.218480415032495,
+              "null_avg_cos2_mean": 0.12501949762976547,
+              "null_avg_cos2_std": 0.05000926642723508,
+              "observed_mean_angle_percentile": 0.0,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          },
+          "p0_vs_block": {
+            "k": 3,
+            "principal_angles_deg": [
+              14.315273986517305,
+              31.81198468975987,
+              75.03272118588411
+            ],
+            "mean_angle_deg": 40.38665995405376,
+            "min_angle_deg": 14.315273986517305,
+            "max_angle_deg": 75.03272118588411,
+            "avg_cos2": 0.575898687155512,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.28583236144244,
+              "null_mean_angle_deg_std": 4.327284851441258,
+              "null_avg_cos2_mean": 0.1264802621639869,
+              "null_avg_cos2_std": 0.051398014026247135,
+              "observed_mean_angle_percentile": 0.0,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          },
+          "p1_vs_block": {
+            "k": 3,
+            "principal_angles_deg": [
+              12.831088145397882,
+              30.9461737723439,
+              74.60319334592394
+            ],
+            "mean_angle_deg": 39.46015175455524,
+            "min_angle_deg": 12.831088145397882,
+            "max_angle_deg": 74.60319334592394,
+            "avg_cos2": 0.585579305035037,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.3740149630619,
+              "null_mean_angle_deg_std": 4.509199839433571,
+              "null_avg_cos2_mean": 0.12579394022332768,
+              "null_avg_cos2_std": 0.05342337491818438,
+              "observed_mean_angle_percentile": 0.0,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          },
+          "p2_vs_block": {
+            "k": 3,
+            "principal_angles_deg": [
+              12.039576024634725,
+              33.5398401150538,
+              69.98618368588821
+            ],
+            "mean_angle_deg": 38.52186660852558,
+            "min_angle_deg": 12.039576024634725,
+            "max_angle_deg": 69.98618368588821,
+            "avg_cos2": 0.5894498275178129,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.60307279349321,
+              "null_mean_angle_deg_std": 4.214270899162417,
+              "null_avg_cos2_mean": 0.12276721689679314,
+              "null_avg_cos2_std": 0.04954659717336106,
+              "observed_mean_angle_percentile": 0.0,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          }
+        }
+      },
+      "layer1": {
+        "case": "control_random_init",
+        "cache_key": "layer_0_after_mlp",
+        "input_dim": 24,
+        "ranks": {
+          "p0": 3,
+          "p1": 3,
+          "p2": 3,
+          "block": 3
+        },
+        "singular_values": {
+          "p0": [
+            2.656124453742677,
+            1.863439712032282,
+            0.8875938634932978
+          ],
+          "p1": [
+            1.6353759879800365,
+            0.9635304460616417,
+            0.42734055148710587
+          ],
+          "p2": [
+            4.208618913986101,
+            3.3692334378213484,
+            1.5503370033405395
+          ],
+          "block": [
+            2.106277291565683,
+            0.18892542966069903,
+            0.06946808604806094
+          ]
+        },
+        "pairwise": {
+          "p0_vs_p1": {
+            "k": 3,
+            "principal_angles_deg": [
+              3.717259711846149,
+              6.072395642890328,
+              12.914240674939084
+            ],
+            "mean_angle_deg": 7.567965343225187,
+            "min_angle_deg": 3.717259711846149,
+            "max_angle_deg": 12.914240674939084,
+            "avg_cos2": 0.9782191271990189,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.46923739192012,
+              "null_mean_angle_deg_std": 4.339620993184036,
+              "null_avg_cos2_mean": 0.12499009869761346,
+              "null_avg_cos2_std": 0.051469312289487194,
+              "observed_mean_angle_percentile": 0.0,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          },
+          "p0_vs_p2": {
+            "k": 3,
+            "principal_angles_deg": [
+              5.43830764487251,
+              10.923495995696722,
+              21.56950722000423
+            ],
+            "mean_angle_deg": 12.643770286857821,
+            "min_angle_deg": 5.43830764487251,
+            "max_angle_deg": 21.56950722000423,
+            "avg_cos2": 0.9399855975955503,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.2254722862422,
+              "null_mean_angle_deg_std": 4.206131086901628,
+              "null_avg_cos2_mean": 0.12741584649238102,
+              "null_avg_cos2_std": 0.050112117446365845,
+              "observed_mean_angle_percentile": 0.0,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          },
+          "p1_vs_p2": {
+            "k": 3,
+            "principal_angles_deg": [
+              7.890662957729943,
+              15.731106769741036,
+              25.377106744248962
+            ],
+            "mean_angle_deg": 16.332958823906647,
+            "min_angle_deg": 7.890662957729943,
+            "max_angle_deg": 25.377106744248962,
+            "avg_cos2": 0.9079899382502127,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.43444978333653,
+              "null_mean_angle_deg_std": 4.218480415032495,
+              "null_avg_cos2_mean": 0.12501949762976547,
+              "null_avg_cos2_std": 0.05000926642723508,
+              "observed_mean_angle_percentile": 0.0,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          },
+          "p0_vs_block": {
+            "k": 3,
+            "principal_angles_deg": [
+              24.942450146784633,
+              67.08498717252014,
+              86.9036234980177
+            ],
+            "mean_angle_deg": 59.64368693910749,
+            "min_angle_deg": 24.942450146784633,
+            "max_angle_deg": 86.9036234980177,
+            "avg_cos2": 0.3255618776070025,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.28583236144244,
+              "null_mean_angle_deg_std": 4.327284851441258,
+              "null_avg_cos2_mean": 0.1264802621639869,
+              "null_avg_cos2_std": 0.051398014026247135,
+              "observed_mean_angle_percentile": 0.0045,
+              "observed_avg_cos2_percentile": 0.9995
+            }
+          },
+          "p1_vs_block": {
+            "k": 3,
+            "principal_angles_deg": [
+              25.84701232426655,
+              64.77529151332487,
+              85.80840726504427
+            ],
+            "mean_angle_deg": 58.810237034211895,
+            "min_angle_deg": 25.84701232426655,
+            "max_angle_deg": 85.80840726504427,
+            "avg_cos2": 0.3322977529303263,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.3740149630619,
+              "null_mean_angle_deg_std": 4.509199839433571,
+              "null_avg_cos2_mean": 0.12579394022332768,
+              "null_avg_cos2_std": 0.05342337491818438,
+              "observed_mean_angle_percentile": 0.004,
+              "observed_avg_cos2_percentile": 0.998
+            }
+          },
+          "p2_vs_block": {
+            "k": 3,
+            "principal_angles_deg": [
+              19.823368853255268,
+              65.16868961679369,
+              88.25393809792367
+            ],
+            "mean_angle_deg": 57.74866552265754,
+            "min_angle_deg": 19.823368853255268,
+            "max_angle_deg": 88.25393809792367,
+            "avg_cos2": 0.35409377366465433,
+            "random_control": {
+              "samples": 2000,
+              "null_mean_angle_deg_mean": 72.60307279349321,
+              "null_mean_angle_deg_std": 4.214270899162417,
+              "null_avg_cos2_mean": 0.12276721689679314,
+              "null_avg_cos2_std": 0.04954659717336106,
+              "observed_mean_angle_percentile": 0.0005,
+              "observed_avg_cos2_percentile": 1.0
+            }
+          }
+        }
+      }
+    }
+  }
+}

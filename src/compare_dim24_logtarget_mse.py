@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Streamlined comparison: trained vs random-init, dim=24, log-target regression.
 
-Outputs only:
-- per-process MSE (0,1,2)
-- joint 8-simplex MSE
+Outputs:
+- per-process KL (0,1,2)
+- joint 8-simplex KL
+- block 3-simplex KL
+for final residual stream and after-first-layer residual stream.
 """
 
 from __future__ import annotations
@@ -18,14 +20,14 @@ if __package__ is None or __package__ == "":
     sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 from src.residual_simplex_regression import (
+    _build_joint_targets,
+    _fit_linear_map,
+    _split_indices,
     load_checkpoint,
     load_rows,
     reduce_features_with_pca,
 )
-from src.residual_simplex_regression_log import (
-    fit_joint_8_simplex_map_log_targets,
-    fit_per_process_maps_log_targets,
-)
+from src.block_simplex_regression import align_xy, build_block_targets
 from src.hmm_process.mess3 import Mess3Process
 
 
@@ -41,8 +43,9 @@ CASES = {
     "control_random_init": Path("artifacts/tiny_transformer_random_init.pt"),
 }
 
-OUT_JSON = Path("artifacts/residual_simplex/comparison_trained_vs_control_dim24_logtarget_mse.json")
-OUT_JSON_LAYER1 = Path("artifacts/residual_simplex/comparison_trained_vs_control_dim24_logtarget_mse_layer1.json")
+OUT_JSON = Path("artifacts/residual_simplex/comparison_trained_vs_control_dim24_logtarget_kl.json")
+OUT_JSON_LAYER1 = Path("artifacts/residual_simplex/comparison_trained_vs_control_dim24_logtarget_kl_layer1.json")
+EPS = 1e-8
 
 
 def build_residual_dataset_from_cache_key(model, cfg, rows: list[dict], cache_key: str) -> dict:
@@ -84,6 +87,44 @@ def build_residual_dataset_from_cache_key(model, cfg, rows: list[dict], cache_ke
     }
 
 
+def _mean_kl(y_true: torch.Tensor, y_pred: torch.Tensor, eps: float = EPS) -> float:
+    y = y_true.clamp_min(eps)
+    p = y_pred.clamp_min(eps)
+    kl = (y * (torch.log(y) - torch.log(p))).sum(dim=1)
+    return float(kl.mean().item())
+
+
+def _fit_and_eval_logtarget_kl(X: torch.Tensor, Y: torch.Tensor, split_seed: int) -> float:
+    tr, va = _split_indices(X.shape[0], train_frac=TRAIN_FRAC, seed=split_seed)
+    Y_log = torch.log(Y + EPS)
+    W, b = _fit_linear_map(X[tr], Y_log[tr])
+    pred_va = torch.softmax(X[va] @ W.T + b, dim=1)
+    return _mean_kl(Y[va], pred_va, eps=EPS)
+
+
+def _per_process_kl(ds: dict) -> dict[str, float]:
+    X = ds["X"]
+    Y = ds["Y"]
+    pid = ds["process_id"]
+    out: dict[str, float] = {}
+    for p in sorted(int(v) for v in pid.unique().tolist()):
+        idx = torch.where(pid == p)[0]
+        out[str(p)] = _fit_and_eval_logtarget_kl(X[idx], Y[idx], split_seed=SEED + p)
+    return out
+
+
+def _joint_8_kl(ds: dict) -> float:
+    X = ds["X"]
+    Y_joint = _build_joint_targets(ds["Y"], ds["process_id"], num_processes=3)
+    return _fit_and_eval_logtarget_kl(X, Y_joint, split_seed=SEED + 123)
+
+
+def _block_3_kl(ds: dict, rows: list[dict], seq_len: int) -> float:
+    block_targets = build_block_targets(rows, seq_len=seq_len)
+    Xb, Yb = align_xy(ds, block_targets)
+    return _fit_and_eval_logtarget_kl(Xb, Yb, split_seed=SEED + 777)
+
+
 def evaluate_case(ckpt_path: Path, rows: list[dict], cache_key: str) -> dict:
     model, cfg, _ = load_checkpoint(ckpt_path, torch.device("cpu"))
     ds = build_residual_dataset_from_cache_key(model, cfg, rows, cache_key=cache_key)
@@ -93,17 +134,15 @@ def evaluate_case(ckpt_path: Path, rows: list[dict], cache_key: str) -> dict:
     ds_k = dict(ds)
     ds_k["X"] = x_red
 
-    per_log = fit_per_process_maps_log_targets(ds_k, train_frac=TRAIN_FRAC, seed=SEED)
-    joint_log = fit_joint_8_simplex_map_log_targets(ds_k, train_frac=TRAIN_FRAC, seed=SEED)
+    per_kl = _per_process_kl(ds_k)
+    joint_kl = _joint_8_kl(ds_k)
+    block_kl = _block_3_kl(ds_k, rows=rows, seq_len=cfg.seq_len)
 
     return {
         "dim": DIM,
-        "per_process_mse_val": {
-            "0": float(per_log[0]["metrics"]["mse_val"]),
-            "1": float(per_log[1]["metrics"]["mse_val"]),
-            "2": float(per_log[2]["metrics"]["mse_val"]),
-        },
-        "joint_8_simplex_mse_val": float(joint_log["metrics"]["mse_val"]),
+        "per_process_kl_val": per_kl,
+        "joint_8_simplex_kl_val": float(joint_kl),
+        "block_3_simplex_kl_val": float(block_kl),
     }
 
 

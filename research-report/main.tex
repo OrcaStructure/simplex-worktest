@@ -131,22 +131,31 @@ We follow the methodology of TODO, and use a fixed subset of the test data to ge
 
 \vspace{5mm}
 
-We first use linear regression to find a linear map between from the latter residual stream into each of the former datasets, and record the mean squared error. As a control, we repeat this analysis with a newly intialised version of the model that shouldn't have any learned representation of the belief state geometry.
+We first use linear regression to find a linear map between from the latter residual stream into each of the former datasets, and record the KL divergence between the predicted and ground truth distributions. As a control, we repeat this analysis with a newly intialised version of the model that shouldn't have any learned representation of the belief state geometry.
 
 TODO
 
-The data decisively shows that, contrary to my predictions, the belief state geometries of the factors are represented and the belief state geometry of the entire process is not. Although the belief state geometry over the factors does not show an especially big change in mean square error compared the control, figure TODO demonstrates that it is signifcantly represented.
+The data decisively shows that, contrary to my predictions, the belief state geometries of the factors are represented and the belief state geometry of the entire process is not. Although the belief state geometry over the factors does not show an especially big change in KL-divegence compared to the control, figure TODO demonstrates that it is signifcantly represented.
 
 \subsection*{Using $\log$ Belief State Probabilites}
 
-As mentioned in the introduction, there are mechanistic reasons for believing that the residual stream is more likely to represent the beliefs states using their log probabilites. To verify this, we do linear regression instead onto the log probabilites of the ground truth belief states, and then convert them back to probabilites before computing mean square error as a fair comparison.
+As mentioned in the introduction, there are mechanistic reasons for believing that the residual stream is more likely to represent the beliefs states using their log probabilites. Given the usual coodinates are, for example, $(p_1,p_2)$ we instead parameterise the simplex by $(\log(p_1/p_3),\log(p_2/p_3))$. We convert the ground truth belief state geometry into these coordinates and before performing the linear regression, and then convert back to probabilites before taking the the KL-divergence again.
 
 \vspace{5mm}
 
-This approach constitently demonstrates superority compared with directly computing the probabilites. 
+This approach constitently demonstrates superority compared with directly computing the probabilites, which supports that part of my hypothesis.
 \subsection*{Orthgonality in the Residual Stream}
 
-In order to describe the subspaces of the residual stream responsible for representing the different factors, we replace the regression analysis by a reduced regression analysis which restricts the 
+In my hypothesis, the 4 representations occupy orthogonal subspaces in the residual stream. Conceptually, the factors are independent and a change in the reprsentation of one factor should not cause a change in the other facotor. That is, they should each be in the nullspaces of eachother's linear maps that we obtained via regression. I test this by calculating the principle angle between the rowspaces of each map.
+
+\vspace{5mm}
+
+Contrary to expectation, I find that while the representation of the belief state geometry across factors is close to orthogonal to the representations of the belief state geometries of the individual factors, they are not close to orthogonal to each other.
+
+\vspace{5mm}
+
+
+
 \subsection*{Procedure}
 Detail the steps, tools, model setup, or experimental protocol.
 

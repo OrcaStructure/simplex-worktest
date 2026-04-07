@@ -1,0 +1,109 @@
+{
+  "config": {
+    "dataset_path": "src/hmm_process/artifacts/mess3_mixed_dataset.jsonl",
+    "max_seqs": 6000,
+    "seq_len": 12,
+    "train_frac": 0.8,
+    "seed": 0,
+    "coordinates": "ALR(2D) -> linear -> inverse-ALR -> KL on probs"
+  },
+  "samples": 72000,
+  "pairs": {
+    "p0_to_p0": {
+      "kl_val": 5.41719025193288e-09,
+      "alr_mse_val": 1.737323528311699e-13,
+      "num_train": 57600,
+      "num_val": 14400
+    },
+    "p0_to_p1": {
+      "kl_val": 0.0015227942494675517,
+      "alr_mse_val": 0.009493611752986908,
+      "num_train": 57600,
+      "num_val": 14400
+    },
+    "p0_to_p2": {
+      "kl_val": 0.002864046022295952,
+      "alr_mse_val": 0.026553522795438766,
+      "num_train": 57600,
+      "num_val": 14400
+    },
+    "p0_to_block": {
+      "kl_val": 0.14270229637622833,
+      "alr_mse_val": 1.8581651449203491,
+      "num_train": 57600,
+      "num_val": 14400
+    },
+    "p1_to_p0": {
+      "kl_val": 0.0028707312885671854,
+      "alr_mse_val": 0.01924748718738556,
+      "num_train": 57600,
+      "num_val": 14400
+    },
+    "p1_to_p1": {
+      "kl_val": 8.37024546895826e-11,
+      "alr_mse_val": 2.2707958560394537e-13,
+      "num_train": 57600,
+      "num_val": 14400
+    },
+    "p1_to_p2": {
+      "kl_val": 0.015526600182056427,
+      "alr_mse_val": 0.12671595811843872,
+      "num_train": 57600,
+      "num_val": 14400
+    },
+    "p1_to_block": {
+      "kl_val": 0.14518322050571442,
+      "alr_mse_val": 1.8866301774978638,
+      "num_train": 57600,
+      "num_val": 14400
+    },
+    "p2_to_p0": {
+      "kl_val": 0.001569286105223,
+      "alr_mse_val": 0.012876196764409542,
+      "num_train": 57600,
+      "num_val": 14400
+    },
+    "p2_to_p1": {
+      "kl_val": 0.004642489366233349,
+      "alr_mse_val": 0.030254367738962173,
+      "num_train": 57600,
+      "num_val": 14400
+    },
+    "p2_to_p2": {
+      "kl_val": -6.288987108860056e-09,
+      "alr_mse_val": 5.016365944052019e-14,
+      "num_train": 57600,
+      "num_val": 14400
+    },
+    "p2_to_block": {
+      "kl_val": 0.14637687802314758,
+      "alr_mse_val": 1.9044665098190308,
+      "num_train": 57600,
+      "num_val": 14400
+    },
+    "block_to_p0": {
+      "kl_val": 0.6011063456535339,
+      "alr_mse_val": 6.083535671234131,
+      "num_train": 57600,
+      "num_val": 14400
+    },
+    "block_to_p1": {
+      "kl_val": 0.4116484224796295,
+      "alr_mse_val": 2.9632444381713867,
+      "num_train": 57600,
+      "num_val": 14400
+    },
+    "block_to_p2": {
+      "kl_val": 0.7596069574356079,
+      "alr_mse_val": 12.661685943603516,
+      "num_train": 57600,
+      "num_val": 14400
+    },
+    "block_to_block": {
+      "kl_val": 3.907290935245555e-09,
+      "alr_mse_val": 6.906314983876755e-14,
+      "num_train": 57600,
+      "num_val": 14400
+    }
+  }
+}

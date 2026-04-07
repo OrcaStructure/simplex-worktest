@@ -56,6 +56,15 @@ def write_csv(path: Path, header: List[str], rows: List[List[object]]) -> None:
         w.writerows(rows)
 
 
+def pretty_name(key: str) -> str:
+    return {
+        "p0": "factor 1",
+        "p1": "factor 2",
+        "p2": "factor 3",
+        "block": "factor distribution",
+    }.get(key, key)
+
+
 def to_alr(y: torch.Tensor, eps: float = EPS) -> torch.Tensor:
     yy = y.clamp_min(eps)
     return torch.log(yy[:, :-1] / yy[:, -1:])
@@ -132,13 +141,14 @@ def plot_side_by_side_simplex(
     order = ["p0", "p1", "p2", "block"]
     colors = {"p0": "#1f77b4", "p1": "#ff7f0e", "p2": "#2ca02c", "block": "#d62728"}
 
-    fig, axes = plt.subplots(4, 2, figsize=(8.2, 13.6))
+    # Horizontal layout: top row ground truth, bottom row predictions.
+    fig, axes = plt.subplots(2, 4, figsize=(14.0, 6.6))
     fig.suptitle(title, fontsize=11)
-    for r, name in enumerate(order):
+    for c, name in enumerate(order):
         y_true, y_pred = panels[name]
         xy_t = barycentric_to_cartesian(y_true.to(torch.float64))
         xy_p = barycentric_to_cartesian(y_pred.to(torch.float64))
-        for c, xy in enumerate((xy_t, xy_p)):
+        for r, xy in enumerate((xy_t, xy_p)):
             ax = axes[r, c]
             ax.plot(tri[:, 0].numpy(), tri[:, 1].numpy(), color="black", linewidth=1.0)
             ax.scatter(xy[:, 0].numpy(), xy[:, 1].numpy(), s=1.8, alpha=0.07, color=colors[name])
@@ -146,10 +156,10 @@ def plot_side_by_side_simplex(
             ax.set_xticks([])
             ax.set_yticks([])
             ax.set_frame_on(False)
-            if c == 0:
-                ax.set_title(f"{name} true", fontsize=9)
+            if r == 0:
+                ax.set_title(f"{pretty_name(name)}: ground truth", fontsize=9)
             else:
-                ax.set_title(f"{name} pred", fontsize=9)
+                ax.set_title(f"{pretty_name(name)}: prediction", fontsize=9)
     fig.tight_layout()
     fig.savefig(out_path, dpi=220, bbox_inches="tight")
     plt.close(fig)
@@ -165,10 +175,10 @@ def export_e1_e2_csvs() -> None:
         rows = []
         for case in ("trained", "control_random_init"):
             per = payload[case]["per_process_kl_val"]
-            rows.append([exp, layer, case, "p0", float(per["0"])])
-            rows.append([exp, layer, case, "p1", float(per["1"])])
-            rows.append([exp, layer, case, "p2", float(per["2"])])
-            rows.append([exp, layer, case, "block", float(payload[case]["block_3_simplex_kl_val"])])
+            rows.append([exp, layer, case, "factor 1", float(per["0"])])
+            rows.append([exp, layer, case, "factor 2", float(per["1"])])
+            rows.append([exp, layer, case, "factor 3", float(per["2"])])
+            rows.append([exp, layer, case, "factor distribution", float(payload[case]["block_3_simplex_kl_val"])])
             rows.append([exp, layer, case, "joint8", float(payload[case]["joint_8_simplex_kl_val"])])
         return rows
 
@@ -213,7 +223,7 @@ def export_e4_e5_csvs() -> None:
         rows = []
         for pair, vals in d.items():
             src, tgt = pair.split("_to_")
-            rows.append([exp_name, src, tgt, vals["kl_val"]])
+            rows.append([exp_name, pretty_name(src), pretty_name(tgt), vals["kl_val"]])
         write_csv(OUT_DIR / f"{exp_name}_kl_matrix.csv", ["experiment", "source", "target", "kl_val"], rows)
 
 
@@ -292,4 +302,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

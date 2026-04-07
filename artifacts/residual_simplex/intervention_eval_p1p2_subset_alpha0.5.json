@@ -1,0 +1,88 @@
+{
+  "config": {
+    "dataset_path": "src/hmm_process/artifacts/mess3_mixed_dataset.jsonl",
+    "checkpoint": "artifacts/tiny_transformer.pt",
+    "subset": "process_id in {1,2}, balanced 50/50",
+    "subset_size_sequences": 3892,
+    "layer": "final_ln",
+    "coords": "ALR",
+    "target_shift": [
+      0.5,
+      0.5
+    ]
+  },
+  "baseline_no_intervention": {
+    "nll_per_token": 0.9137658344306697,
+    "ppl": 2.4936957185725217,
+    "block_shift": {
+      "delta_c1_mean": 0.0,
+      "delta_c2_mean": 0.0,
+      "mean_shift": 0.0,
+      "coord_gap_abs": 0.0
+    },
+    "p1_shift": {
+      "delta_c1_mean": 0.0,
+      "delta_c2_mean": 0.0,
+      "mean_shift": 0.0,
+      "coord_gap_abs": 0.0
+    },
+    "p2_shift": {
+      "delta_c1_mean": 0.0,
+      "delta_c2_mean": 0.0,
+      "mean_shift": 0.0,
+      "coord_gap_abs": 0.0
+    }
+  },
+  "method_A_rowspace_block": {
+    "nll_per_token": 0.9140969642673138,
+    "ppl": 2.494521592356632,
+    "block_shift": {
+      "delta_c1_mean": 0.5,
+      "delta_c2_mean": 0.5000000596046448,
+      "mean_shift": 0.5000000298023224,
+      "coord_gap_abs": 5.960464477539063e-08
+    },
+    "p1_shift": {
+      "delta_c1_mean": 0.2852311432361603,
+      "delta_c2_mean": 0.3493630886077881,
+      "mean_shift": 0.3172971159219742,
+      "coord_gap_abs": 0.06413194537162781
+    },
+    "p2_shift": {
+      "delta_c1_mean": 1.6188735961914062,
+      "delta_c2_mean": 1.709374189376831,
+      "mean_shift": 1.6641238927841187,
+      "coord_gap_abs": 0.0905005931854248
+    },
+    "token_dist_kl_base_to_int": 0.00017724603648502801,
+    "token_dist_kl_int_to_base": 0.0001777904993246184
+  },
+  "method_B_nullspace_others": {
+    "nll_per_token": 0.9138849917729043,
+    "ppl": 2.4939928784307264,
+    "block_shift": {
+      "delta_c1_mean": 0.5000001192092896,
+      "delta_c2_mean": 0.5000001788139343,
+      "mean_shift": 0.5000001490116119,
+      "coord_gap_abs": 5.960464477539063e-08
+    },
+    "p1_shift": {
+      "delta_c1_mean": -2.5681083926087922e-08,
+      "delta_c2_mean": 3.0480634904961335e-08,
+      "mean_shift": 2.3997754894367063e-09,
+      "coord_gap_abs": 5.6161718831049257e-08
+    },
+    "p2_shift": {
+      "delta_c1_mean": 1.2763521795022825e-07,
+      "delta_c2_mean": 1.4508786705391685e-07,
+      "mean_shift": 1.3636154250207255e-07,
+      "coord_gap_abs": 1.74526491036886e-08
+    },
+    "token_dist_kl_base_to_int": 4.5422970852778724e-05,
+    "token_dist_kl_int_to_base": 4.546997629455769e-05
+  },
+  "deltas": {
+    "delta_A_l2": 0.7371492385864258,
+    "delta_B_l2": 0.8406639099121094
+  }
+}

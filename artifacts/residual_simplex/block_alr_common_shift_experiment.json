@@ -1,0 +1,74 @@
+{
+  "config": {
+    "dataset_path": "src/hmm_process/artifacts/mess3_mixed_dataset.jsonl",
+    "checkpoint": "artifacts/tiny_transformer.pt",
+    "max_seqs": 6000,
+    "layer": "final_ln",
+    "target_shift": [
+      0.1,
+      0.1
+    ],
+    "target_map": "block",
+    "coords": "ALR(2D)"
+  },
+  "method_A_rowspace_block": {
+    "delta_norm_l2": 0.14742983877658844,
+    "subspace_dim": 2,
+    "shifts": {
+      "p0": {
+        "delta_c1": 0.14834117889404297,
+        "delta_c2": 0.1549617201089859,
+        "mean_shift": 0.15165144950151443,
+        "coord_gap_abs": 0.006620541214942932
+      },
+      "p1": {
+        "delta_c1": 0.05704623460769653,
+        "delta_c2": 0.06987263262271881,
+        "mean_shift": 0.06345943361520767,
+        "coord_gap_abs": 0.012826398015022278
+      },
+      "p2": {
+        "delta_c1": 0.3237747550010681,
+        "delta_c2": 0.341874897480011,
+        "mean_shift": 0.33282482624053955,
+        "coord_gap_abs": 0.01810014247894287
+      },
+      "block": {
+        "delta_c1": 0.10000000894069672,
+        "delta_c2": 0.10000002384185791,
+        "mean_shift": 0.10000001639127731,
+        "coord_gap_abs": 1.4901161193847656e-08
+      }
+    }
+  },
+  "method_B_nullspace_others": {
+    "delta_norm_l2": 0.16813278198242188,
+    "subspace_dim": 42,
+    "shifts": {
+      "p0": {
+        "delta_c1": -1.862645149230957e-09,
+        "delta_c2": 0.0,
+        "mean_shift": -9.313225746154785e-10,
+        "coord_gap_abs": 1.862645149230957e-09
+      },
+      "p1": {
+        "delta_c1": 9.313225746154785e-10,
+        "delta_c2": 0.0,
+        "mean_shift": 4.656612873077393e-10,
+        "coord_gap_abs": 9.313225746154785e-10
+      },
+      "p2": {
+        "delta_c1": 1.4901161193847656e-08,
+        "delta_c2": -1.1175870895385742e-08,
+        "mean_shift": 1.862645149230957e-09,
+        "coord_gap_abs": 2.60770320892334e-08
+      },
+      "block": {
+        "delta_c1": 0.09999997913837433,
+        "delta_c2": 0.09999996423721313,
+        "mean_shift": 0.09999997168779373,
+        "coord_gap_abs": 1.4901161193847656e-08
+      }
+    }
+  }
+}

@@ -1,41 +1,41 @@
 experiment,layer,case,target,kl_val
-E1_ALR,final_ln,trained,p0,0.007331902161240578
-E1_ALR,final_ln,trained,p1,0.0036640530452132225
-E1_ALR,final_ln,trained,p2,0.010754604823887348
-E1_ALR,final_ln,trained,block,0.08651652187108994
+E1_ALR,final_ln,trained,factor 1,0.007331902161240578
+E1_ALR,final_ln,trained,factor 2,0.0036640530452132225
+E1_ALR,final_ln,trained,factor 3,0.010754604823887348
+E1_ALR,final_ln,trained,factor distribution,0.08651652187108994
 E1_ALR,final_ln,trained,joint8,1.6953164339065552
-E1_ALR,final_ln,control_random_init,p0,0.04836603254079819
-E1_ALR,final_ln,control_random_init,p1,0.02797401137650013
-E1_ALR,final_ln,control_random_init,p2,0.056935980916023254
-E1_ALR,final_ln,control_random_init,block,0.12825533747673035
+E1_ALR,final_ln,control_random_init,factor 1,0.04836603254079819
+E1_ALR,final_ln,control_random_init,factor 2,0.02797401137650013
+E1_ALR,final_ln,control_random_init,factor 3,0.056935980916023254
+E1_ALR,final_ln,control_random_init,factor distribution,0.12825533747673035
 E1_ALR,final_ln,control_random_init,joint8,1.4927804470062256
-E1_ALR,layer1,trained,p0,0.022677503526210785
-E1_ALR,layer1,trained,p1,0.013735691085457802
-E1_ALR,layer1,trained,p2,0.027358245104551315
-E1_ALR,layer1,trained,block,0.09020884335041046
+E1_ALR,layer1,trained,factor 1,0.022677503526210785
+E1_ALR,layer1,trained,factor 2,0.013735691085457802
+E1_ALR,layer1,trained,factor 3,0.027358245104551315
+E1_ALR,layer1,trained,factor distribution,0.09020884335041046
 E1_ALR,layer1,trained,joint8,1.6801598072052002
-E1_ALR,layer1,control_random_init,p0,0.053187187761068344
-E1_ALR,layer1,control_random_init,p1,0.02987062931060791
-E1_ALR,layer1,control_random_init,p2,0.06399592757225037
-E1_ALR,layer1,control_random_init,block,0.14092117547988892
+E1_ALR,layer1,control_random_init,factor 1,0.053187187761068344
+E1_ALR,layer1,control_random_init,factor 2,0.02987062931060791
+E1_ALR,layer1,control_random_init,factor 3,0.06399592757225037
+E1_ALR,layer1,control_random_init,factor distribution,0.14092117547988892
 E1_ALR,layer1,control_random_init,joint8,1.396724820137024
-E2_PROB,final_ln,trained,p0,0.12320484966039658
-E2_PROB,final_ln,trained,p1,0.015572784468531609
-E2_PROB,final_ln,trained,p2,0.07855525612831116
-E2_PROB,final_ln,trained,block,0.10652035474777222
+E2_PROB,final_ln,trained,factor 1,0.12320484966039658
+E2_PROB,final_ln,trained,factor 2,0.015572784468531609
+E2_PROB,final_ln,trained,factor 3,0.07855525612831116
+E2_PROB,final_ln,trained,factor distribution,0.10652035474777222
 E2_PROB,final_ln,trained,joint8,1.2499829530715942
-E2_PROB,final_ln,control_random_init,p0,0.1532682627439499
-E2_PROB,final_ln,control_random_init,p1,0.043531518429517746
-E2_PROB,final_ln,control_random_init,p2,0.11196333914995193
-E2_PROB,final_ln,control_random_init,block,0.12018585205078125
+E2_PROB,final_ln,control_random_init,factor 1,0.1532682627439499
+E2_PROB,final_ln,control_random_init,factor 2,0.043531518429517746
+E2_PROB,final_ln,control_random_init,factor 3,0.11196333914995193
+E2_PROB,final_ln,control_random_init,factor distribution,0.12018585205078125
 E2_PROB,final_ln,control_random_init,joint8,1.248895287513733
-E2_PROB,layer1,trained,p0,0.1341751217842102
-E2_PROB,layer1,trained,p1,0.027068888768553734
-E2_PROB,layer1,trained,p2,0.0882793739438057
-E2_PROB,layer1,trained,block,0.09959781169891357
+E2_PROB,layer1,trained,factor 1,0.1341751217842102
+E2_PROB,layer1,trained,factor 2,0.027068888768553734
+E2_PROB,layer1,trained,factor 3,0.0882793739438057
+E2_PROB,layer1,trained,factor distribution,0.09959781169891357
 E2_PROB,layer1,trained,joint8,1.234802484512329
-E2_PROB,layer1,control_random_init,p0,0.14894212782382965
-E2_PROB,layer1,control_random_init,p1,0.04131433740258217
-E2_PROB,layer1,control_random_init,p2,0.1183735728263855
-E2_PROB,layer1,control_random_init,block,0.1306254267692566
+E2_PROB,layer1,control_random_init,factor 1,0.14894212782382965
+E2_PROB,layer1,control_random_init,factor 2,0.04131433740258217
+E2_PROB,layer1,control_random_init,factor 3,0.1183735728263855
+E2_PROB,layer1,control_random_init,factor distribution,0.1306254267692566
 E2_PROB,layer1,control_random_init,joint8,1.2352184057235718

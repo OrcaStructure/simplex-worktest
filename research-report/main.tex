@@ -133,7 +133,19 @@ We first use linear regression to find a linear map between from the latter resi
 
 TODO
 
-Teh
+The data decisively shows that, contrary to my predictions, the belief state geometries of the factors are represented and the belief state geometry of the entire process is not. Although the belief state geometry over the factors does not show an especially big change in mean square error compared the control, figure TODO demonstrates that it is signifcantly represented.
+
+\subsection*{Using $\log$ Belief State Probabilites}
+
+As mentioned in the introduction, there are mechanistic reasons for believing that the residual stream is more likely to represent the beliefs states using their log probabilites. To verify this, we do linear regression instead onto the log probabilites of the ground truth belief states, and then convert them back to probabilites before computing mean square error as a fair comparison.
+
+\vspace{5mm}
+
+This approach constitently demonstrates superority compared with directly computing the probabilites. 
+\subsection*{Orthgonality in the Residual Stream}
+
+In order to find the directions speciifcally responsible for the 
+
 \subsection*{Procedure}
 Detail the steps, tools, model setup, or experimental protocol.
 

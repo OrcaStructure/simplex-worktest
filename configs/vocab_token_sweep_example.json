@@ -1,0 +1,49 @@
+{
+  "global": {
+    "run_name": "vocab_token_sweep_v1",
+    "device": "cuda",
+    "seed": 0,
+    "n_layers": 2,
+    "d_model": 48,
+    "n_heads": 4,
+    "d_ff": 96,
+    "seq_len": 12,
+    "train_steps": 3000,
+    "batch_size": 64,
+    "eval_batches": 40,
+    "train_frac": 0.9,
+    "lr": 0.0003
+  },
+  "runs": [
+    {
+      "name": "vocab3_dense",
+      "vocab_size": 3,
+      "num_processes": 3,
+      "sequences_per_process": 8000,
+      "steps": 64,
+      "sparse_emission": false,
+      "seed": 11
+    },
+    {
+      "name": "vocab5_dense",
+      "vocab_size": 5,
+      "num_processes": 3,
+      "sequences_per_process": 8000,
+      "steps": 64,
+      "sparse_emission": false,
+      "seed": 22
+    },
+    {
+      "name": "vocab7_sparse_state",
+      "vocab_size": 7,
+      "num_processes": 3,
+      "sequences_per_process": 8000,
+      "steps": 64,
+      "sparse_emission": true,
+      "sparse_process_id": 1,
+      "sparse_state_id": 2,
+      "sparse_allowed_tokens": [0, 1, 2],
+      "seed": 33
+    }
+  ]
+}

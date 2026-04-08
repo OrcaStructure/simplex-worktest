@@ -1,0 +1,19 @@
+{
+  "checkpoint": "artifacts/sweeps/layers_dims_processcount_v1/checkpoints/train_p2__L1_D12.pt",
+  "dataset": "artifacts/sweeps/layers_dims_processcount_v1/datasets/p8.jsonl",
+  "train_size": 57600,
+  "val_size": 3200,
+  "test_size": 3200,
+  "val_loss": 0.9933271110057831,
+  "test_loss": 0.9895627796649933,
+  "test_loss_per_process": {
+    "0": 0.9769701823592186,
+    "1": 0.9424647897481918,
+    "2": 0.9501463189721108,
+    "3": 0.955966317653656,
+    "4": 0.9916109517216682,
+    "5": 1.0020895510911942,
+    "6": 1.0380102545022964,
+    "7": 1.0563118159770966
+  }
+}

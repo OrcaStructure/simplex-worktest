@@ -7,6 +7,7 @@ import json
 import math
 import subprocess
 import sys
+import time
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -42,6 +43,11 @@ def ensure_int(value: Any, name: str, *, min_value: int = 1) -> int:
     if out < min_value:
         raise ValueError(f"{name} must be >= {min_value}, got {out}")
     return out
+
+
+def count_jsonl_rows(path: Path) -> int:
+    with path.open("r", encoding="utf-8") as f:
+        return sum(1 for _ in f)
 
 
 def parse_dataset_variant(v: Dict[str, Any]) -> DatasetVariant:
@@ -110,7 +116,19 @@ def parse_model_variant(v: Dict[str, Any]) -> ModelVariant:
 def run_cmd(cmd: List[str], *, log_path: Path) -> None:
     log_path.parent.mkdir(parents=True, exist_ok=True)
     with log_path.open("w", encoding="utf-8") as f:
-        proc = subprocess.run(cmd, stdout=f, stderr=subprocess.STDOUT, check=False)
+        proc = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1,
+        )
+        assert proc.stdout is not None
+        for line in proc.stdout:
+            f.write(line)
+            f.flush()
+            print(line, end="", flush=True)
+        proc.wait()
     if proc.returncode != 0:
         raise RuntimeError(f"Command failed ({proc.returncode}): {' '.join(cmd)}\nSee log: {log_path}")
 
@@ -122,7 +140,14 @@ def main() -> None:
     parser.add_argument("--python", type=str, default=sys.executable)
     parser.add_argument("--skip-training", action="store_true")
     parser.add_argument("--skip-eval", action="store_true")
+    parser.add_argument(
+        "--no-resume",
+        action="store_true",
+        help="Disable resume mode and rerun all datasets/training/evals even if outputs already exist",
+    )
     args = parser.parse_args()
+
+    resume = not args.no_resume
 
     cfg_path = Path(args.config)
     cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
@@ -131,6 +156,7 @@ def main() -> None:
     run_name = str(global_cfg.get("run_name", datetime.now().strftime("sweep_%Y%m%d_%H%M%S")))
     out_root = Path(args.out_root) / run_name
     out_root.mkdir(parents=True, exist_ok=True)
+    sweep_start = time.perf_counter()
 
     dataset_variants = [parse_dataset_variant(v) for v in cfg["dataset_variants"]]
     model_variants = [parse_model_variant(v) for v in cfg["model_variants"]]
@@ -152,9 +178,45 @@ def main() -> None:
     logs_dir = out_root / "logs"
     eval_dir = out_root / "eval"
 
+    total_train_runs = len(dataset_variants) * len(model_variants)
+    total_eval_runs = total_train_runs * len(dataset_variants)
+    print(
+        f"[SWEEP] run_name={run_name} datasets={len(dataset_variants)} "
+        f"models={len(model_variants)} train_runs={total_train_runs} eval_runs={total_eval_runs}",
+        flush=True,
+    )
+    print(f"[SWEEP] resume_mode={'on' if resume else 'off'}", flush=True)
+    print(f"[SWEEP] outputs={out_root}", flush=True)
+
     dataset_manifest = []
-    for ds in dataset_variants:
+    for dsi, ds in enumerate(dataset_variants, start=1):
+        ds_start = time.perf_counter()
         ds_path = datasets_dir / f"{ds.name}.jsonl"
+
+        if resume and ds_path.exists() and ds_path.stat().st_size > 0:
+            row_count = count_jsonl_rows(ds_path)
+            print(
+                f"[DATASET {dsi}/{len(dataset_variants)}] resume hit {ds.name} "
+                f"rows={row_count} path={ds_path}",
+                flush=True,
+            )
+            dataset_manifest.append(
+                {
+                    "name": ds.name,
+                    "path": str(ds_path),
+                    "num_processes": len(ds.specs),
+                    "specs": ds.specs,
+                    "rows": row_count,
+                    "steps": ds.steps,
+                }
+            )
+            continue
+
+        print(
+            f"[DATASET {dsi}/{len(dataset_variants)}] building {ds.name} "
+            f"(processes={len(ds.specs)} steps={ds.steps} spp={ds.sequences_per_process} seed={ds.seed})",
+            flush=True,
+        )
         rows = generate_equal_mixture_dataset(
             specs=[(float(a), float(x)) for a, x in ds.specs],
             sequences_per_process=ds.sequences_per_process,
@@ -174,10 +236,17 @@ def main() -> None:
                 "steps": ds.steps,
             }
         )
+        print(
+            f"[DATASET {dsi}/{len(dataset_variants)}] done {ds.name} rows={len(rows)} "
+            f"elapsed={time.perf_counter() - ds_start:.1f}s path={ds_path}",
+            flush=True,
+        )
 
     train_runs: List[Dict[str, Any]] = []
+    train_idx = 0
     for dsi, ds in enumerate(dataset_variants):
         for mi, mv in enumerate(model_variants):
+            train_idx += 1
             run_id = f"train_{ds.name}__{mv.name}"
             checkpoint_path = ckpt_dir / f"{run_id}.pt"
             run_seed = base_seed + 1000 * dsi + 10 * mi
@@ -200,8 +269,22 @@ def main() -> None:
             train_runs.append(train_meta)
 
             if args.skip_training:
+                print(f"[TRAIN {train_idx}/{total_train_runs}] skipped by flag {run_id}", flush=True)
                 continue
 
+            if resume and checkpoint_path.exists() and checkpoint_path.stat().st_size > 0:
+                print(
+                    f"[TRAIN {train_idx}/{total_train_runs}] resume hit {run_id} ckpt={checkpoint_path}",
+                    flush=True,
+                )
+                continue
+
+            run_start = time.perf_counter()
+            print(
+                f"[TRAIN {train_idx}/{total_train_runs}] start {run_id} "
+                f"(dataset={ds.name} model={mv.name} seed={run_seed})",
+                flush=True,
+            )
             cmd = [
                 args.python,
                 "src/simple_transformer_residual.py",
@@ -239,15 +322,64 @@ def main() -> None:
                 wandb_mode,
             ]
             cmd.append("--use-wandb" if use_wandb else "--no-wandb")
-            run_cmd(cmd, log_path=logs_dir / f"{run_id}.log")
+            run_log = logs_dir / f"{run_id}.log"
+            print(f"[TRAIN {train_idx}/{total_train_runs}] log={run_log}", flush=True)
+            run_cmd(cmd, log_path=run_log)
+            print(
+                f"[TRAIN {train_idx}/{total_train_runs}] done {run_id} "
+                f"elapsed={time.perf_counter() - run_start:.1f}s ckpt={checkpoint_path}",
+                flush=True,
+            )
 
     # Evaluate each trained checkpoint on each dataset variant.
     eval_rows: List[Dict[str, Any]] = []
     if not args.skip_eval:
+        eval_idx = 0
         for run in train_runs:
+            ckpt_path = Path(run["checkpoint_path"])
+            if not ckpt_path.exists() or ckpt_path.stat().st_size == 0:
+                print(
+                    f"[EVAL] skipping run {run['run_id']} because checkpoint is missing: {ckpt_path}",
+                    flush=True,
+                )
+                continue
+
             for ds in dataset_variants:
+                eval_idx += 1
                 eval_name = f"{run['run_id']}__on__{ds.name}"
                 eval_out = eval_dir / f"{eval_name}.json"
+                eval_log = logs_dir / f"{eval_name}.log"
+
+                if resume and eval_out.exists() and eval_out.stat().st_size > 0:
+                    try:
+                        payload = json.loads(eval_out.read_text(encoding="utf-8"))
+                        eval_rows.append(
+                            {
+                                "train_dataset": run["dataset_name"],
+                                "model_name": run["model_name"],
+                                "eval_dataset": ds.name,
+                                "val_loss": float(payload["val_loss"]),
+                                "test_loss": float(payload["test_loss"]),
+                            }
+                        )
+                        print(
+                            f"[EVAL {eval_idx}/{total_eval_runs}] resume hit {eval_name} "
+                            f"val_loss={payload['val_loss']:.6f} test_loss={payload['test_loss']:.6f}",
+                            flush=True,
+                        )
+                        continue
+                    except (json.JSONDecodeError, KeyError, TypeError, ValueError):
+                        print(
+                            f"[EVAL {eval_idx}/{total_eval_runs}] invalid existing output, rerunning {eval_name}",
+                            flush=True,
+                        )
+
+                eval_start = time.perf_counter()
+                print(
+                    f"[EVAL {eval_idx}/{total_eval_runs}] start {eval_name} "
+                    f"(train_dataset={run['dataset_name']} model={run['model_name']} eval_dataset={ds.name})",
+                    flush=True,
+                )
                 cmd = [
                     args.python,
                     "src/sweeps/eval_transformer_checkpoint.py",
@@ -268,7 +400,8 @@ def main() -> None:
                     "--out",
                     str(eval_out),
                 ]
-                run_cmd(cmd, log_path=logs_dir / f"{eval_name}.log")
+                print(f"[EVAL {eval_idx}/{total_eval_runs}] log={eval_log}", flush=True)
+                run_cmd(cmd, log_path=eval_log)
                 payload = json.loads(eval_out.read_text(encoding="utf-8"))
                 eval_rows.append(
                     {
@@ -278,6 +411,12 @@ def main() -> None:
                         "val_loss": float(payload["val_loss"]),
                         "test_loss": float(payload["test_loss"]),
                     }
+                )
+                print(
+                    f"[EVAL {eval_idx}/{total_eval_runs}] done {eval_name} "
+                    f"val_loss={payload['val_loss']:.6f} test_loss={payload['test_loss']:.6f} "
+                    f"elapsed={time.perf_counter() - eval_start:.1f}s",
+                    flush=True,
                 )
 
     manifest = {
@@ -300,6 +439,7 @@ def main() -> None:
     print(f"Manifest: {out_root / 'manifest.json'}")
     if eval_rows:
         print(f"Cross-eval CSV: {out_root / 'cross_eval_losses.csv'}")
+    print(f"[SWEEP] total_elapsed={time.perf_counter() - sweep_start:.1f}s", flush=True)
 
 
 if __name__ == "__main__":

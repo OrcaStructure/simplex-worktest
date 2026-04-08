@@ -1,0 +1,14 @@
+{
+  "checkpoint": "artifacts/sweeps/layers_dims_processcount_v1/checkpoints/train_p8__L3_D48.pt",
+  "dataset": "artifacts/sweeps/layers_dims_processcount_v1/datasets/p3.jsonl",
+  "train_size": 21600,
+  "val_size": 1200,
+  "test_size": 1200,
+  "val_loss": 1.0098475515842438,
+  "test_loss": 1.0001939922571181,
+  "test_loss_per_process": {
+    "0": 1.0213176652789115,
+    "1": 0.9543040782213211,
+    "2": 1.04040869474411
+  }
+}

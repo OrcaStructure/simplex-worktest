@@ -227,6 +227,52 @@ def export_e4_e5_csvs() -> None:
         write_csv(OUT_DIR / f"{exp_name}_kl_matrix.csv", ["experiment", "source", "target", "kl_val"], rows)
 
 
+def export_e6_steering_cross_eval_csv() -> None:
+    d = load_json(ROOT / "artifacts" / "residual_simplex" / "intervention_decrease_p123_cross_eval.json")
+    baseline = d["baseline_by_dataset"]
+    cross = d["cross_eval"]
+
+    rows: List[List[object]] = []
+    for ds in ("p0", "p1", "p2"):
+        base_ppl = float(baseline[ds]["ppl"])
+        base_nll = float(baseline[ds]["nll_per_token"])
+        for steer in ("dec_p0", "dec_p1", "dec_p2"):
+            key = f"dataset_{ds}__steer_{steer}"
+            r = cross[key]
+            delta = r["mean_prob_delta"]
+            rows.append(
+                [
+                    ds,
+                    steer,
+                    float(r["nll_per_token"]),
+                    float(r["ppl"]),
+                    float(r["nll_per_token"]) - base_nll,
+                    float(r["ppl"]) - base_ppl,
+                    float(delta[0]),
+                    float(delta[1]),
+                    float(delta[2]),
+                    float(r["token_dist_kl_base_to_int"]),
+                ]
+            )
+
+    write_csv(
+        OUT_DIR / "E6_STEERING_cross_eval.csv",
+        [
+            "dataset",
+            "steer_target",
+            "nll_per_token",
+            "ppl",
+            "nll_delta_vs_dataset_baseline",
+            "ppl_delta_vs_dataset_baseline",
+            "delta_p1",
+            "delta_p2",
+            "delta_p3",
+            "token_kl_base_to_int",
+        ],
+        rows,
+    )
+
+
 def make_e1_e2_side_by_side() -> None:
     rows = load_rows(DATASET_PATH, MAX_SEQS)
     for case_name, ckpt in CASES.items():
@@ -289,10 +335,15 @@ def main() -> None:
     )
     run_if_missing(ROOT / "artifacts" / "residual_simplex" / "alr_to_alr_kl.json", [PY, "src/alr_to_alr_regression.py"])
     run_if_missing(ROOT / "artifacts" / "residual_simplex" / "prob_to_prob_kl.json", [PY, "src/prob_to_prob_regression.py"])
+    run_if_missing(
+        ROOT / "artifacts" / "residual_simplex" / "intervention_decrease_p123_cross_eval.json",
+        [PY, "src/intervention_decrease_p123_cross_eval.py"],
+    )
 
     export_e1_e2_csvs()
     export_e3_csvs()
     export_e4_e5_csvs()
+    export_e6_steering_cross_eval_csv()
     make_e1_e2_side_by_side()
 
     print(f"Saved canonical outputs to: {OUT_DIR}")

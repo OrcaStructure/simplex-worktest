@@ -3,7 +3,7 @@
   "latex-workshop.latex.tools": [
     {
       "name": "latexmk",
-      "command": "latexmk",
+      "command": "/Library/TeX/texbin/latexmk",
       "args": [
         "-synctex=1",
         "-interaction=nonstopmode",
@@ -14,6 +14,9 @@
       ]
     }
   ],
+  "latex-workshop.linting.chktex.exec.path": "/Library/TeX/texbin/chktex",
+  "latex-workshop.linting.chktex.enabled": false,
+  "latex-workshop.linting.run": "never",
   "latex-workshop.latex.recipes": [
     {
       "name": "latexmk",

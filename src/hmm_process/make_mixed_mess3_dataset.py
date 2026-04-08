@@ -24,12 +24,12 @@ def parse_specs(specs_str: str) -> List[Tuple[float, float]]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Create one mixed dataset from three Mess3 processes")
+    parser = argparse.ArgumentParser(description="Create one mixed dataset from one or more Mess3 processes")
     parser.add_argument(
         "--specs",
         type=str,
         default="0.8,0.1;0.7,0.15;0.9,0.05",
-        help="Three alpha,x pairs separated by semicolons",
+        help="Alpha,x pairs separated by semicolons, e.g. 0.8,0.1;0.7,0.15",
     )
     parser.add_argument("--sequences-per-process", type=int, default=5000)
     parser.add_argument("--steps", type=int, default=64, help="tokens per sequence")
@@ -63,4 +63,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

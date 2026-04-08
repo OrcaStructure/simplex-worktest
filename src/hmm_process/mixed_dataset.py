@@ -28,8 +28,8 @@ def generate_equal_mixture_dataset(
     and optionally:
       hidden_states
     """
-    if len(specs) != 3:
-        raise ValueError("specs must contain exactly 3 Mess3 parameter pairs")
+    if len(specs) <= 0:
+        raise ValueError("specs must contain at least one Mess3 parameter pair")
     if sequences_per_process <= 0:
         raise ValueError("sequences_per_process must be positive")
     if steps <= 0:
@@ -72,4 +72,3 @@ def write_jsonl(rows: Iterable[dict], out_path: str | Path) -> Path:
         for row in rows:
             f.write(json.dumps(row) + "\n")
     return out
-

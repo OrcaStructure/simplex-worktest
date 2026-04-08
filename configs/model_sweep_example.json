@@ -1,0 +1,71 @@
+{
+  "global": {
+    "run_name": "layers_dims_processcount_v1",
+    "device": "cuda",
+    "seed": 0,
+    "train_steps": 3000,
+    "batch_size": 64,
+    "lr": 0.0003,
+    "eval_batches": 40,
+    "train_frac": 0.9,
+    "seq_len": 12,
+    "vocab_size": 3,
+    "use_wandb": false,
+    "wandb_mode": "disabled"
+  },
+  "dataset_variants": [
+    {
+      "name": "p2",
+      "num_processes": 2,
+      "alpha_range": [0.7, 0.92],
+      "x_range": [0.05, 0.22],
+      "sequences_per_process": 8000,
+      "steps": 64,
+      "seed": 0,
+      "shuffle": true
+    },
+    {
+      "name": "p3",
+      "num_processes": 3,
+      "alpha_range": [0.7, 0.92],
+      "x_range": [0.05, 0.22],
+      "sequences_per_process": 8000,
+      "steps": 64,
+      "seed": 1,
+      "shuffle": true
+    },
+    {
+      "name": "p8",
+      "num_processes": 8,
+      "alpha_range": [0.7, 0.95],
+      "x_range": [0.03, 0.25],
+      "sequences_per_process": 8000,
+      "steps": 64,
+      "seed": 2,
+      "shuffle": true
+    }
+  ],
+  "model_variants": [
+    {
+      "name": "L1_D12",
+      "n_layers": 1,
+      "d_model": 12,
+      "n_heads": 3,
+      "d_ff_multiplier": 2.0
+    },
+    {
+      "name": "L2_D24",
+      "n_layers": 2,
+      "d_model": 24,
+      "n_heads": 4,
+      "d_ff_multiplier": 2.0
+    },
+    {
+      "name": "L3_D48",
+      "n_layers": 3,
+      "d_model": 48,
+      "n_heads": 6,
+      "d_ff_multiplier": 2.0
+    }
+  ]
+}

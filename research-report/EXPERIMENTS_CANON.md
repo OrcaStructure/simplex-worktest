@@ -110,3 +110,24 @@ This is the authoritative list of experiments that matter for the current report
   - Supported by E3.
 - C4: Low-KL linear transforms exist between factor geometries themselves in ground-truth coordinate space (Mess3-specific redundancy), but not from block to factor.
   - Supported by E4/E5.
+
+---
+
+## E7. Scaled Training Sweep (Layers, Width, Process Count)
+- Scripts:
+  - `src/sweeps/run_model_sweep.py` (main orchestrator)
+  - `src/sweeps/eval_transformer_checkpoint.py` (single checkpoint eval)
+  - `src/hmm_process/make_mixed_mess3_dataset_sweep.py` (dataset generation)
+- Config:
+  - `configs/model_sweep_example.json`
+- Variables swept:
+  - model depth: `n_layers`
+  - model width: `d_model` (with compatible `n_heads`)
+  - dataset mixture size: `num_processes` (e.g., 2 to substantially larger values)
+- Outputs (per run):
+  - `artifacts/sweeps/<run_name>/manifest.json`
+  - `artifacts/sweeps/<run_name>/cross_eval_losses.csv`
+  - `artifacts/sweeps/<run_name>/eval/*.json`
+  - `artifacts/sweeps/<run_name>/checkpoints/*.pt`
+- Run instructions:
+  - `research-report/SWEEP_RUNBOOK.md`

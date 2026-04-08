@@ -1,0 +1,51 @@
+{
+  "config_path": "configs/vocab_token_sweep_example.json",
+  "run_name": "vocab_token_sweep_v1",
+  "global": {
+    "run_name": "vocab_token_sweep_v1",
+    "device": "cuda",
+    "seed": 0,
+    "n_layers": 2,
+    "d_model": 48,
+    "n_heads": 4,
+    "d_ff": 96,
+    "seq_len": 12,
+    "train_steps": 3000,
+    "batch_size": 64,
+    "eval_batches": 40,
+    "train_frac": 0.9,
+    "lr": 0.0003
+  },
+  "runs": [
+    {
+      "name": "vocab3_dense",
+      "vocab_size": 3,
+      "sparse_emission": false,
+      "dataset_path": "artifacts/sweeps_vocab/vocab_token_sweep_v1/datasets/vocab3_dense.jsonl",
+      "metadata_path": "artifacts/sweeps_vocab/vocab_token_sweep_v1/datasets/vocab3_dense_metadata.json",
+      "trained_checkpoint": "artifacts/sweeps_vocab/vocab_token_sweep_v1/checkpoints/vocab3_dense_trained.pt",
+      "control_checkpoint": "artifacts/sweeps_vocab/vocab_token_sweep_v1/checkpoints/vocab3_dense_control_random_init.pt",
+      "metrics_json": "artifacts/sweeps_vocab/vocab_token_sweep_v1/metrics/vocab3_dense_metrics.json"
+    },
+    {
+      "name": "vocab5_dense",
+      "vocab_size": 5,
+      "sparse_emission": false,
+      "dataset_path": "artifacts/sweeps_vocab/vocab_token_sweep_v1/datasets/vocab5_dense.jsonl",
+      "metadata_path": "artifacts/sweeps_vocab/vocab_token_sweep_v1/datasets/vocab5_dense_metadata.json",
+      "trained_checkpoint": "artifacts/sweeps_vocab/vocab_token_sweep_v1/checkpoints/vocab5_dense_trained.pt",
+      "control_checkpoint": "artifacts/sweeps_vocab/vocab_token_sweep_v1/checkpoints/vocab5_dense_control_random_init.pt",
+      "metrics_json": "artifacts/sweeps_vocab/vocab_token_sweep_v1/metrics/vocab5_dense_metrics.json"
+    },
+    {
+      "name": "vocab7_sparse_state",
+      "vocab_size": 7,
+      "sparse_emission": true,
+      "dataset_path": "artifacts/sweeps_vocab/vocab_token_sweep_v1/datasets/vocab7_sparse_state.jsonl",
+      "metadata_path": "artifacts/sweeps_vocab/vocab_token_sweep_v1/datasets/vocab7_sparse_state_metadata.json",
+      "trained_checkpoint": "artifacts/sweeps_vocab/vocab_token_sweep_v1/checkpoints/vocab7_sparse_state_trained.pt",
+      "control_checkpoint": "artifacts/sweeps_vocab/vocab_token_sweep_v1/checkpoints/vocab7_sparse_state_control_random_init.pt",
+      "metrics_json": "artifacts/sweeps_vocab/vocab_token_sweep_v1/metrics/vocab7_sparse_state_metrics.json"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+Loaded dataset: total=24000 train=21600 val=1200 test=1200 seq_len=12 vocab=5
+Training model...
+Saved model checkpoint to artifacts/sweeps_vocab/vocab_token_sweep_v1/checkpoints/vocab5_dense_control_random_init.pt
+
+Prompt tokens: [0, 1, 2]
+Generated tokens: [0, 1, 2, 1, 3, 3, 3, 4, 1, 1, 3, 4, 1]
+
+=== Residual Analysis ===
+Residual stream norms at final token:
+  embed                norm=9.2029
+  layer_0_after_attn   norm=9.5724
+  layer_0_after_mlp    norm=9.7246
+  layer_1_after_attn   norm=10.0325
+  layer_1_after_mlp    norm=10.1125
+
+Logit-lens style top tokens from each residual state:
+  embed                1:0.37, 4:0.17, 2:0.03
+  layer_0_after_attn   1:0.30, 4:0.07, 2:-0.01
+  layer_0_after_mlp    1:0.28, 4:0.15, 2:-0.02
+  layer_1_after_attn   1:0.35, 2:0.08, 4:0.04
+  layer_1_after_mlp    1:0.33, 4:0.20, 2:0.07

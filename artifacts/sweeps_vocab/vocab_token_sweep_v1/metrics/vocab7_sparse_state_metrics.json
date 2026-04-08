@@ -1,0 +1,311 @@
+{
+  "run_name": "vocab7_sparse_state",
+  "vocab_size": 7,
+  "sparse_emission": true,
+  "cases": {
+    "final_ln": {
+      "trained": {
+        "input_dim": 48,
+        "per_process_kl_val": {
+          "0": 0.0028106807731091976,
+          "1": 0.005624436307698488,
+          "2": 0.0036793346516788006
+        },
+        "joint_simplex_kl_val": 1.969672441482544,
+        "block_simplex_kl_val": 0.03939702361822128,
+        "rowspace_ranks": {
+          "p0": 2,
+          "p1": 2,
+          "p2": 2,
+          "block": 2
+        },
+        "rowspace_within_case": {
+          "block_vs_p0": {
+            "k": 2,
+            "mean_angle_deg": 84.53531935004114,
+            "min_angle_deg": 79.49337597237607,
+            "max_angle_deg": 89.5772627277062,
+            "avg_cos2": 0.016652833378021144
+          },
+          "block_vs_p1": {
+            "k": 2,
+            "mean_angle_deg": 77.3844093476252,
+            "min_angle_deg": 70.21048113510503,
+            "max_angle_deg": 84.55833756014538,
+            "avg_cos2": 0.061809973952326284
+          },
+          "block_vs_p2": {
+            "k": 2,
+            "mean_angle_deg": 89.01199921819246,
+            "min_angle_deg": 88.69847341183528,
+            "max_angle_deg": 89.32552502454963,
+            "avg_cos2": 0.00032724677601786423
+          },
+          "p0_vs_p1": {
+            "k": 2,
+            "mean_angle_deg": 67.32827398930807,
+            "min_angle_deg": 50.877676926403694,
+            "max_angle_deg": 83.77887105221245,
+            "avg_cos2": 0.2049382821215892
+          },
+          "p0_vs_p2": {
+            "k": 2,
+            "mean_angle_deg": 68.53483755847296,
+            "min_angle_deg": 55.77486596643551,
+            "max_angle_deg": 81.29480915051039,
+            "avg_cos2": 0.16962629845856067
+          },
+          "p1_vs_p2": {
+            "k": 2,
+            "mean_angle_deg": 59.9746784892433,
+            "min_angle_deg": 44.81656378354043,
+            "max_angle_deg": 75.13279319494617,
+            "avg_cos2": 0.2845173295248294
+          }
+        }
+      },
+      "control_random_init": {
+        "input_dim": 48,
+        "per_process_kl_val": {
+          "0": 0.002384738763794303,
+          "1": 0.0054029799066483974,
+          "2": 0.0033869496546685696
+        },
+        "joint_simplex_kl_val": 1.7314512729644775,
+        "block_simplex_kl_val": 0.06819798052310944,
+        "rowspace_ranks": {
+          "p0": 2,
+          "p1": 2,
+          "p2": 2,
+          "block": 2
+        },
+        "rowspace_within_case": {
+          "block_vs_p0": {
+            "k": 2,
+            "mean_angle_deg": 73.5269317972385,
+            "min_angle_deg": 67.32493200723563,
+            "max_angle_deg": 79.72893158724138,
+            "avg_cos2": 0.09020328968223366
+          },
+          "block_vs_p1": {
+            "k": 2,
+            "mean_angle_deg": 74.18669881026958,
+            "min_angle_deg": 64.1078154456549,
+            "max_angle_deg": 84.26558217488427,
+            "avg_cos2": 0.10033605941548673
+          },
+          "block_vs_p2": {
+            "k": 2,
+            "mean_angle_deg": 71.47330270213646,
+            "min_angle_deg": 66.4445077980513,
+            "max_angle_deg": 76.50209760622164,
+            "avg_cos2": 0.10709495479572473
+          },
+          "p0_vs_p1": {
+            "k": 2,
+            "mean_angle_deg": 62.12657985515875,
+            "min_angle_deg": 42.30797136393588,
+            "max_angle_deg": 81.94518834638163,
+            "avg_cos2": 0.2832746820503247
+          },
+          "p0_vs_p2": {
+            "k": 2,
+            "mean_angle_deg": 64.38329532292764,
+            "min_angle_deg": 51.51824843826884,
+            "max_angle_deg": 77.24834220758642,
+            "avg_cos2": 0.21796698915633292
+          },
+          "p1_vs_p2": {
+            "k": 2,
+            "mean_angle_deg": 72.24156057806606,
+            "min_angle_deg": 61.15729867764055,
+            "max_angle_deg": 83.32582247849156,
+            "avg_cos2": 0.12311198607964666
+          }
+        }
+      },
+      "cross_case_same_map": {
+        "trained_vs_control_block": {
+          "k": 2,
+          "mean_angle_deg": 85.60986218971085,
+          "min_angle_deg": 83.6192252916494,
+          "max_angle_deg": 87.6004990877723,
+          "avg_cos2": 0.007051967395302501
+        },
+        "trained_vs_control_p0": {
+          "k": 2,
+          "mean_angle_deg": 80.85908190944016,
+          "min_angle_deg": 76.42260782666999,
+          "max_angle_deg": 85.29555599221035,
+          "avg_cos2": 0.03091909139999718
+        },
+        "trained_vs_control_p1": {
+          "k": 2,
+          "mean_angle_deg": 78.93492833729492,
+          "min_angle_deg": 70.22855310613377,
+          "max_angle_deg": 87.64130356845607,
+          "avg_cos2": 0.05805983939841349
+        },
+        "trained_vs_control_p2": {
+          "k": 2,
+          "mean_angle_deg": 87.66386826069748,
+          "min_angle_deg": 85.66400288120028,
+          "max_angle_deg": 89.66373364019468,
+          "avg_cos2": 0.0028752961406442942
+        }
+      }
+    },
+    "layer1": {
+      "trained": {
+        "input_dim": 48,
+        "per_process_kl_val": {
+          "0": 0.0020658341236412525,
+          "1": 0.005081121809780598,
+          "2": 0.003197778481990099
+        },
+        "joint_simplex_kl_val": 1.9775816202163696,
+        "block_simplex_kl_val": 0.06401324272155762,
+        "rowspace_ranks": {
+          "p0": 2,
+          "p1": 2,
+          "p2": 2,
+          "block": 2
+        },
+        "rowspace_within_case": {
+          "block_vs_p0": {
+            "k": 2,
+            "mean_angle_deg": 81.80111933243455,
+            "min_angle_deg": 75.81043060482612,
+            "max_angle_deg": 87.79180806004297,
+            "avg_cos2": 0.030786884684839384
+          },
+          "block_vs_p1": {
+            "k": 2,
+            "mean_angle_deg": 75.32276823107588,
+            "min_angle_deg": 61.247588069834194,
+            "max_angle_deg": 89.39794839231756,
+            "avg_cos2": 0.11574805486232517
+          },
+          "block_vs_p2": {
+            "k": 2,
+            "mean_angle_deg": 79.56460787063142,
+            "min_angle_deg": 76.15412327739038,
+            "max_angle_deg": 82.97509246387246,
+            "avg_cos2": 0.03611361380070521
+          },
+          "p0_vs_p1": {
+            "k": 2,
+            "mean_angle_deg": 70.92068932093517,
+            "min_angle_deg": 53.96630144097811,
+            "max_angle_deg": 87.87507720089222,
+            "avg_cos2": 0.1737128909176408
+          },
+          "p0_vs_p2": {
+            "k": 2,
+            "mean_angle_deg": 56.78879214144537,
+            "min_angle_deg": 43.42281409850175,
+            "max_angle_deg": 70.154770184389,
+            "avg_cos2": 0.32138011516822546
+          },
+          "p1_vs_p2": {
+            "k": 2,
+            "mean_angle_deg": 67.28165200188886,
+            "min_angle_deg": 53.00372854423706,
+            "max_angle_deg": 81.55957545954064,
+            "avg_cos2": 0.19183171019126694
+          }
+        }
+      },
+      "control_random_init": {
+        "input_dim": 48,
+        "per_process_kl_val": {
+          "0": 0.0020278955344110727,
+          "1": 0.005059718154370785,
+          "2": 0.002903471700847149
+        },
+        "joint_simplex_kl_val": 1.7164480686187744,
+        "block_simplex_kl_val": 0.080923892557621,
+        "rowspace_ranks": {
+          "p0": 2,
+          "p1": 2,
+          "p2": 2,
+          "block": 2
+        },
+        "rowspace_within_case": {
+          "block_vs_p0": {
+            "k": 2,
+            "mean_angle_deg": 74.75382362197493,
+            "min_angle_deg": 66.2566168485418,
+            "max_angle_deg": 83.25103039540808,
+            "avg_cos2": 0.08796530101394945
+          },
+          "block_vs_p1": {
+            "k": 2,
+            "mean_angle_deg": 74.0964051187914,
+            "min_angle_deg": 67.33984781753938,
+            "max_angle_deg": 80.85296242004341,
+            "avg_cos2": 0.08684982279373465
+          },
+          "block_vs_p2": {
+            "k": 2,
+            "mean_angle_deg": 83.5236546469631,
+            "min_angle_deg": 79.62276104616866,
+            "max_angle_deg": 87.42454824775753,
+            "avg_cos2": 0.017232696720383304
+          },
+          "p0_vs_p1": {
+            "k": 2,
+            "mean_angle_deg": 73.59224248137572,
+            "min_angle_deg": 65.26893708489283,
+            "max_angle_deg": 81.91554787785861,
+            "avg_cos2": 0.09740112100183353
+          },
+          "p0_vs_p2": {
+            "k": 2,
+            "mean_angle_deg": 69.51485896056911,
+            "min_angle_deg": 53.80858257288446,
+            "max_angle_deg": 85.22113534825375,
+            "avg_cos2": 0.17780643838385454
+          },
+          "p1_vs_p2": {
+            "k": 2,
+            "mean_angle_deg": 63.849197340304265,
+            "min_angle_deg": 52.43194648850255,
+            "max_angle_deg": 75.26644819210598,
+            "avg_cos2": 0.21820949434914338
+          }
+        }
+      },
+      "cross_case_same_map": {
+        "trained_vs_control_block": {
+          "k": 2,
+          "mean_angle_deg": 83.92615744757751,
+          "min_angle_deg": 82.41714789932352,
+          "max_angle_deg": 85.43516699583148,
+          "avg_cos2": 0.011873738414788655
+        },
+        "trained_vs_control_p0": {
+          "k": 2,
+          "mean_angle_deg": 76.85904060182992,
+          "min_angle_deg": 66.68744997338045,
+          "max_angle_deg": 87.03063123027937,
+          "avg_cos2": 0.07964943997968885
+        },
+        "trained_vs_control_p1": {
+          "k": 2,
+          "mean_angle_deg": 82.48702281676361,
+          "min_angle_deg": 81.26195574554282,
+          "max_angle_deg": 83.71208988798442,
+          "avg_cos2": 0.017537225589225266
+        },
+        "trained_vs_control_p2": {
+          "k": 2,
+          "mean_angle_deg": 72.59858624073921,
+          "min_angle_deg": 61.03237780354984,
+          "max_angle_deg": 84.16479467792857,
+          "avg_cos2": 0.12244880146607302
+        }
+      }
+    }
+  }
+}

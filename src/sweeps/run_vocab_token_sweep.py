@@ -279,34 +279,59 @@ def load_checkpoint(path: Path, device: torch.device) -> Tuple[TinyTransformer, 
     return model, cfg
 
 
-def build_residual_dataset(model: TinyTransformer, cfg: Config, rows: List[dict], process_lookup: Dict[int, GenericTokenProcess], cache_key: str) -> dict:
+def build_residual_dataset(
+    model: TinyTransformer,
+    cfg: Config,
+    rows: List[dict],
+    process_lookup: Dict[int, GenericTokenProcess],
+    cache_key: str,
+    *,
+    device: torch.device,
+    eval_batch_size: int,
+    verbose: bool,
+    progress_every: int,
+    progress_label: str,
+) -> dict:
     xs = []
     ys = []
     pids = []
     sids = []
     poss = []
 
+    prepared: List[Tuple[int, int, List[int]]] = []
     for seq_idx, row in enumerate(rows):
         toks = [int(t) for t in row["tokens"]]
         pid = int(row["process_id"])
         if len(toks) < cfg.seq_len:
             continue
+        prepared.append((seq_idx, pid, toks[: cfg.seq_len]))
 
-        x_tokens = toks[: cfg.seq_len]
+    total = len(prepared)
+    if verbose:
+        print(f"[{progress_label}] extracting residuals for {total} sequences with batch_size={eval_batch_size} on {device}")
+
+    for start in range(0, total, eval_batch_size):
+        chunk = prepared[start : start + eval_batch_size]
+        batch_tokens = torch.tensor([x for _, _, x in chunk], dtype=torch.long, device=device)
         with torch.no_grad():
-            inp = torch.tensor(x_tokens, dtype=torch.long).unsqueeze(0)
-            _, cache = model(inp, capture_residuals=True)
-        residuals = cache[cache_key][0].detach().cpu()
+            _, cache = model(batch_tokens, capture_residuals=True)
+        residuals_batch = cache[cache_key].detach().cpu()  # [B,T,d]
 
-        proc = process_lookup[pid]
-        traj = proc.belief_trajectory(x_tokens)
+        for b_idx, (seq_idx, pid, x_tokens) in enumerate(chunk):
+            residuals = residuals_batch[b_idx]
+            proc = process_lookup[pid]
+            traj = proc.belief_trajectory(x_tokens)
 
-        for pos in range(cfg.seq_len):
-            xs.append(residuals[pos].to(torch.float32))
-            ys.append(traj[pos + 1].to(torch.float32))
-            pids.append(pid)
-            sids.append(seq_idx)
-            poss.append(pos)
+            for pos in range(cfg.seq_len):
+                xs.append(residuals[pos].to(torch.float32))
+                ys.append(traj[pos + 1].to(torch.float32))
+                pids.append(pid)
+                sids.append(seq_idx)
+                poss.append(pos)
+
+        done = min(start + len(chunk), total)
+        if verbose and (done % progress_every == 0 or done == total):
+            print(f"[{progress_label}] residual extraction progress: {done}/{total}")
 
     return {
         "X": torch.stack(xs, dim=0),
@@ -431,9 +456,25 @@ def eval_case(
     cache_key: str,
     train_frac: float,
     seed: int,
+    eval_device: torch.device,
+    eval_batch_size: int,
+    verbose: bool,
+    progress_every: int,
+    progress_label: str,
 ) -> dict:
-    model, cfg = load_checkpoint(ckpt_path, torch.device("cpu"))
-    ds = build_residual_dataset(model, cfg, rows, process_lookup, cache_key)
+    model, cfg = load_checkpoint(ckpt_path, eval_device)
+    ds = build_residual_dataset(
+        model,
+        cfg,
+        rows,
+        process_lookup,
+        cache_key,
+        device=eval_device,
+        eval_batch_size=eval_batch_size,
+        verbose=verbose,
+        progress_every=progress_every,
+        progress_label=progress_label,
+    )
     ds["X"] = ds["X"].float()
 
     pid = ds["process_id"]
@@ -545,7 +586,14 @@ def main() -> None:
     train_frac = float(global_cfg.get("train_frac", 0.9))
     lr = float(global_cfg.get("lr", 3e-4))
     device = str(global_cfg.get("device", "cuda"))
+    eval_device_str = str(global_cfg.get("eval_device", device))
+    eval_batch_size = int(global_cfg.get("eval_batch_size", 256))
+    eval_progress_every = int(global_cfg.get("eval_progress_every", 2000))
     base_seed = int(global_cfg.get("seed", 0))
+    eval_device = torch.device(eval_device_str)
+    if eval_device.type == "cuda" and not torch.cuda.is_available():
+        print("eval_device=cuda requested but unavailable; falling back to CPU")
+        eval_device = torch.device("cpu")
 
     runs = [parse_run_spec(d) for d in cfg["runs"]]
     if verbose:
@@ -559,6 +607,10 @@ def main() -> None:
         print(
             f"train: steps={train_steps} batch={batch_size} eval_batches={eval_batches} "
             f"train_frac={train_frac} lr={lr} device={device} base_seed={base_seed}"
+        )
+        print(
+            f"analysis/eval: eval_device={eval_device} eval_batch_size={eval_batch_size} "
+            f"eval_progress_every={eval_progress_every}"
         )
         print(f"num_runs={len(runs)}")
         for rr in runs:
@@ -691,8 +743,32 @@ def main() -> None:
         for cache_tag, cache_key in (("final_ln", "final_ln"), ("layer1", "layer_0_after_mlp")):
             if verbose:
                 print(f"\n[{run.name}] evaluating cache={cache_tag} ({cache_key})")
-            trained = eval_case(trained_ckpt, rows, process_lookup, cache_key, train_frac=train_frac, seed=run_seed)
-            control = eval_case(control_ckpt, rows, process_lookup, cache_key, train_frac=train_frac, seed=run_seed)
+            trained = eval_case(
+                trained_ckpt,
+                rows,
+                process_lookup,
+                cache_key,
+                train_frac=train_frac,
+                seed=run_seed,
+                eval_device=eval_device,
+                eval_batch_size=eval_batch_size,
+                verbose=verbose,
+                progress_every=eval_progress_every,
+                progress_label=f"{run.name}:{cache_tag}:trained",
+            )
+            control = eval_case(
+                control_ckpt,
+                rows,
+                process_lookup,
+                cache_key,
+                train_frac=train_frac,
+                seed=run_seed,
+                eval_device=eval_device,
+                eval_batch_size=eval_batch_size,
+                verbose=verbose,
+                progress_every=eval_progress_every,
+                progress_label=f"{run.name}:{cache_tag}:control",
+            )
             cross = summarize_cross_case(trained, control)
             if verbose:
                 tr_pp = float(sum(trained["per_process_kl_val"].values()) / len(trained["per_process_kl_val"]))

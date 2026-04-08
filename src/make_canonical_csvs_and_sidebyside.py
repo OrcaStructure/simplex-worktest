@@ -143,7 +143,6 @@ def plot_side_by_side_simplex(
 
     # Horizontal layout: top row ground truth, bottom row predictions.
     fig, axes = plt.subplots(2, 4, figsize=(14.0, 6.6))
-    fig.suptitle(title, fontsize=11)
     for c, name in enumerate(order):
         y_true, y_pred = panels[name]
         xy_t = barycentric_to_cartesian(y_true.to(torch.float64))
@@ -156,10 +155,7 @@ def plot_side_by_side_simplex(
             ax.set_xticks([])
             ax.set_yticks([])
             ax.set_frame_on(False)
-            if r == 0:
-                ax.set_title(f"{pretty_name(name)}: ground truth", fontsize=9)
-            else:
-                ax.set_title(f"{pretty_name(name)}: prediction", fontsize=9)
+            # Intentionally no subplot titles for cleaner report figures.
     fig.tight_layout()
     fig.savefig(out_path, dpi=220, bbox_inches="tight")
     plt.close(fig)

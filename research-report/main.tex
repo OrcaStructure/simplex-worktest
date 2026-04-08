@@ -31,8 +31,8 @@
 \rhead{\thepage}
 
 % ---------- Title metadata ----------
-\title{untitled}
-\author{Aden Power \\ Simplex Work Test}
+\title{Belief State Geometries for Non-Ergodic Data-Generating Processes}
+\author{Aden Power\thanks{LLMs used extensively for coding and data processing, but not for prose.} \\ Simplex Work Test}
 \date{\today}
 
 \begin{document}
@@ -144,33 +144,29 @@ We first use linear regression to find a linear map $L(\cdot)=W(\cdot)+B$ from t
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=\textwidth]{../artifacts/canonical_outputs/E1_side_by_side_simplex_trained_final_ln.png}
-    \caption{}
-\end{figure}
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=\textwidth]{../artifacts/canonical_outputs/E1_side_by_side_simplex_control_final_ln.png}
-    \caption{}
+    \includegraphics[width=\textwidth]{../artifacts/canonical_outputs/E2_side_by_side_simplex_trained_final_ln.png}
+    \caption{Prediction and grouth truth plots of belief states of a common dataset.}
+    \label{fig:e2_prob_trained}
 \end{figure}
 
 \begin{table}[ht]
     \centering
-    \caption{}
-    \begin{tabular}{llrr}
+    \caption{KL-divergence between predicted belief state geometry based on least squares fit linear representation in residual stream and ground truth simplex belief state geometry}
+    \label{tab:e1_kl}
+    \begin{tabular}{lrr}
         \toprule
-        Layer & Target & Trained & Control \\
+        Target & Trained & Control \\
         \midrule
-        Final LN & factor 1 & 0.0073 & 0.0484 \\
-        Final LN & factor 2 & 0.0037 & 0.0280 \\
-        Final LN & factor 3 & 0.0108 & 0.0569 \\
-        Final LN & factor distribution & 0.0865 & 0.1283 \\
-        Final LN & joint (8-state) & 1.6953 & 1.4928 \\
+        factor 1 & 0.1232 & 0.1533 \\
+        factor 2 & 0.0156 & 0.0435 \\
+        factor 3 & 0.0786 & 0.1120 \\
+        factor distribution & 0.1065 & 0.1202 \\
+        joint (8-simplex) & 1.2500 & 1.2489 \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-The data decisively shows that, contrary to my predictions, the belief state geometries of the factors are represented and the belief state geometry of the entire process is not. Although the belief state geometry over the factors does not show an especially big change in KL-divegence compared to the control, figure TODO demonstrates that it is signifcantly represented.
+The data in table \ref{tab:e1_kl} decisively shows that, contrary to my predictions, the belief state geometries of the factors have a linear representation and the belief state geometry of the entire process does not. Although the belief state geometry over the factors does not show an especially big change in KL-divegence compared to the control, figure \ref{fig:e2_prob_trained} demonstrates that it is signifcantly represented.
 
 \subsection*{Using $\log$ Belief State Probabilites}
 
@@ -181,28 +177,24 @@ As mentioned in the introduction, there are mechanistic reasons for believing th
 This approach constitently demonstrates superority compared with directly computing the probabilites, which supports that part of my hypothesis.
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=\textwidth]{../artifacts/canonical_outputs/E2_side_by_side_simplex_trained_final_ln.png}
-    \caption{}
-\end{figure}
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=\textwidth]{../artifacts/canonical_outputs/E2_side_by_side_simplex_control_final_ln.png}
-    \caption{}
+    \includegraphics[width=\textwidth]{../artifacts/canonical_outputs/E1_side_by_side_simplex_trained_final_ln.png}
+    \caption{Predictions created by least squares into ALR coordinates are then transformed to simplex coordinates before comparing using KL-divergence for a fair test.}
+    \label{fig:e1_alr_trained}
 \end{figure}
 
 \begin{table}[ht]
     \centering
-    \caption{}
-    \begin{tabular}{llrr}
+    \caption{The predictions created by using least squares into ALR coordinates are even more accurate to the ground truth when translated to simplex coordinates and compared using KL-divergence.}
+    \label{tab:e2_kl}
+    \begin{tabular}{lrr}
         \toprule
-        Layer & Target & Trained & Control \\
+        Target & Trained & Control \\
         \midrule
-        Final LN & factor 1 & 0.1232 & 0.1533 \\
-        Final LN & factor 2 & 0.0156 & 0.0435 \\
-        Final LN & factor 3 & 0.0786 & 0.1120 \\
-        Final LN & factor distribution & 0.1065 & 0.1202 \\
-        Final LN & joint (8-state) & 1.2500 & 1.2489 \\
+        factor 1 & 0.0073 & 0.0484 \\
+        factor 2 & 0.0037 & 0.0280 \\
+        factor 3 & 0.0108 & 0.0569 \\
+        factor distribution & 0.0865 & 0.1283 \\
+        joint (8-simplex) & 1.6953 & 1.4928 \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -216,24 +208,8 @@ Contrary to expectation, I find that while the representation of the belief stat
 
 \begin{table}[ht]
     \centering
-    \caption{}
-    \begin{tabular}{lrr}
-        \toprule
-        Pair & Trained & Control \\
-        \midrule
-        factor 1 vs factor 2 & 12.6675 & 8.1794 \\
-        factor 1 vs factor 3 & 25.7782 & 12.3184 \\
-        factor 2 vs factor 3 & 33.7838 & 18.4761 \\
-        factor 1 vs factor distribution & 80.6525 & 84.6481 \\
-        factor 2 vs factor distribution & 82.4731 & 84.1972 \\
-        factor 3 vs factor distribution & 79.0264 & 82.4594 \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-\begin{table}[ht]
-    \centering
-    \caption{}
+    \caption{Principle angles between row spaces of ALR maps. The representation of the belief state geometry over the factors is close to orthogonal to those of the individual factors, but the latter are aligned with eachother.}
+    \label{tab:e3_within_angles_prob}
     \begin{tabular}{lrr}
         \toprule
         Pair & Trained & Control \\
@@ -248,28 +224,14 @@ Contrary to expectation, I find that while the representation of the belief stat
     \end{tabular}
 \end{table}
 
-\begin{table}[ht]
-    \centering
-    \caption{}
-    \begin{tabular}{lrr}
-        \toprule
-        Pair & Final LN & Layer 1 \\
-        \midrule
-        factor 1 (trained vs control) & 86.2868 & 77.8885 \\
-        factor 2 (trained vs control) & 85.0743 & 78.0991 \\
-        factor 3 (trained vs control) & 83.0592 & 79.4521 \\
-        factor distribution (trained vs control) & 81.3738 & 84.0825 \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
 \vspace{5mm}
 
-In retrospect it seems kind of obvious (and it would have spoke wonders for my geometric intuition if I had noticed this earlier) that because many Mess3 belief state geometries visually demonstrate so much geometric similarity to one another. By doing regression we can find linear maps between them with close to $0$ kl-divergence. Although this isn't sufficient to show that that the trjectories within the belief state geometry are highly similar, up to a linear transform. I suggest that this is a specific property of the mathematical simplicity of Mess3, and in general there would be substantailly less redundancy.
+In retrospect it seems kind of obvious (and it would have spoke wonders for my geometric intuition if I had noticed this earlier) that because many Mess3 belief state geometries visually demonstrate so much geometric similarity to one another. By doing regression we can find linear maps between them with close to $0$ kl-divergence. Although this isn't sufficient to show that that the trajectories within the belief state geometry are highly similar, up to a linear transform. I suggest that this is a specific property of the mathematical simplicity of Mess3, and in general there would be substantailly less redundancy.
 
 \begin{table}[ht]
     \centering
-    \caption{}
+    \caption{Least squares fits between the ground truth 2-simplex data shows there are linear transforms wherein the belief state geometry of each factor are approximately the same, whereas the belief state geometry over factors is fundamentally distinct.}
+    \label{tab:e4_alr_to_alr}
     \begin{tabular}{lrrrr}
         \toprule
         Source $\backslash$ Target & factor 1 & factor 2 & factor 3 & factor distribution \\
@@ -282,24 +244,11 @@ In retrospect it seems kind of obvious (and it would have spoke wonders for my g
     \end{tabular}
 \end{table}
 
-\begin{table}[ht]
-    \centering
-    \caption{}
-    \begin{tabular}{lrrrr}
-        \toprule
-        Source $\backslash$ Target & factor 1 & factor 2 & factor 3 & factor distribution \\
-        \midrule
-        factor 1 & 0.0000 & 0.0017 & 0.0340 & 0.1360 \\
-        factor 2 & 0.0054 & 0.0000 & 0.0412 & 0.1379 \\
-        factor 3 & 0.0053 & 0.0077 & 0.0000 & 0.1393 \\
-        factor distribution & 0.6010 & 0.4117 & 0.7593 & 0.0000 \\
-        \bottomrule
-    \end{tabular}
-\end{table}
 
 
 
-\section{Intervening to Supress a Factor}
+
+\subsection*{Intervening to Supress a Factor}
 
 As mentioned in the introduction, the independent factors in the data-generating process bear some resemblance to the empirically observed phenomena of personas in LLMs. The belief state geometry we have demonstrated in this work is therefore the best case because, by analogy, the probability of being in a given persona is decoupled from the beliefs about what each persona would do next. We consider how our findings could be used to supress a broadly misaligned persona in this analogy \cite{betley2025emergentmisalignment}.
 
@@ -325,6 +274,21 @@ In order to test this approach, We generate three datasets of sequences, each in
 
 \vspace{5mm}
 
+\begin{table}[ht]
+    \centering
+    \caption{The cross-entropy losses obtained from using the different steering vectors on the different datasets do not show an effect.}
+    \label{tab:e6_steering_cross_eval_loss}
+    \begin{tabular}{lrrr}
+        \toprule
+        Dataset & $p_1\downarrow$ steer & $p_2\downarrow$ steer& $p_3\downarrow$ steer \\
+        \midrule
+        Factor 1 omitted & 0.99183965 & 0.98798378 & 0.98698572 \\
+        Factor 2 omittedd & 1.10878269 & 1.10895218 & 1.10783441 \\
+        Factor 3 omitted & 0.74529040 & 0.74673929 & 0.74574044 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
 As shown in the table, we find a null result. We can likely attribute this to the steering method being too heavy-handed and damaging the belief state geometry or other representations to an extent that completely noises the results.
 
 
@@ -333,14 +297,20 @@ As shown in the table, we find a null result. We can likely attribute this to th
 Time permitting, I would devise a more targeted method for this steering.
 \subsection*{Further Directions}
 
-In this section I will list some of my ideas of what I would try next (I am very excited about this research if you can't tell from my writing):
+In this section I will list some of my ideas of what I would try next (I am very interested in this research if you can't tell from my writing).
+
+\vspace{3mm}
+
+The overall research agenda in this area would be to establish a general description of the inductive biases that transformers have in choosing geometry to represent the true belief state geometries of the kind of `cascading' hidden markov models we describe here.
+
+
+\vspace{3mm}
+To have a serious theory of impact, it should at least make some predictions about large langauge models that are falsifiable.
 
 \begin{itemize}
-    \item Placeholder for next-step experiment ideas.
+    \item Use more mathematically distinct factors of the data-generating process than the Mess3 procesess in this work to see whether repesentations of factors form in orthogonal subspaces.
 \end{itemize}
 
-\section*{Acknowledgments}
-Optional.
 
 \bibliographystyle{unsrtnat}
 \bibliography{references}
